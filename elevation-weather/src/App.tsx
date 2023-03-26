@@ -1,16 +1,13 @@
 import React from 'react';
 import './App.css';
-import DropDown from './components/DropDown';
+import Header from './components/Header';
+import SearchFilter from './components/SearchFilter';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Main app
-        </p>
-      </header>
-      <DropDown />
+      <Header />
+      <SearchFilter />
     </div>
   );
 }
