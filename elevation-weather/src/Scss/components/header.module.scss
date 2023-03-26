@@ -1,0 +1,12 @@
+@use '../abstracts';
+
+
+.header-container {
+    height: 40vh;
+    background-color: aquamarine;
+
+    
+    .title {
+        color: green;
+    }
+}

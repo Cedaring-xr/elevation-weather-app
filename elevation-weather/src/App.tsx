@@ -1,13 +1,13 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import Header from './components/Header';
-import SearchFilter from './components/SearchFilter';
+import SlideSelect from './components/SlideSelect';
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <SearchFilter />
+      <SlideSelect />
     </div>
   );
 }
