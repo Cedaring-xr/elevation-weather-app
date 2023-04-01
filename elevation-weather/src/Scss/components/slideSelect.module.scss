@@ -1,11 +1,11 @@
-
+@use '../abstracts';
 
 .slide-container {
     width: 100vw;
     margin: 0 auto;
     border: 1px solid #666;
     max-width: 1000px;
-    background-color: rgb(144, 215, 228);
+    background-color: abstracts.$customBlue;
     display: flex;
     flex-direction: column;
 }
