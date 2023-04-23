@@ -10,3 +10,7 @@ a, ul, li {
     list-style: none;
 }
 
+body {
+    background: rgb(123,143,162);
+    background: linear-gradient(0deg, rgba(123,143,162,1) 22%, rgba(98,99,99,1) 100%);
+}
