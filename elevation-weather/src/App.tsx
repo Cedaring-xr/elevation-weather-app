@@ -1,15 +1,15 @@
-import React from 'react';
-import './App.scss';
-import Header from './components/Header';
-import SlideSelect from './components/SlideSelect';
+import React from 'react'
+import './index.css'
+import Header from './components/Header'
+import SlideSelect from './components/SlideSelect'
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-      <SlideSelect />
-    </div>
-  );
+	return (
+		<div className="App">
+			<Header />
+			<SlideSelect />
+		</div>
+	)
 }
 
-export default App;
+export default App
