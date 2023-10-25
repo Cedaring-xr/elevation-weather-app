@@ -7,44 +7,44 @@ type ForcastProps = {
 
 const Forcast: React.FC<ForcastProps> = ({ title }) => {
 	return (
-		<div className="forcast-container">
-			<div className="forcast-header">
+		<div className="">
+			<div className="">
 				<h4>{title}</h4>
 				<hr />
 			</div>
-			<div className="forcast-data">
-				<div className="forcast-block">
+			<div className="">
+				<div className="">
 					<p>time</p>
 					<span>
-						<TiWeatherShower className="show-weather-icon" />
+						<TiWeatherShower className="" />
 					</span>
 					<p>55 degrees</p>
 				</div>
-				<div className="forcast-block">
+				<div className="">
 					<p>time</p>
 					<span>
-						<TiWeatherShower className="show-weather-icon" />
+						<TiWeatherShower className="" />
 					</span>
 					<p>55 degrees</p>
 				</div>
-				<div className="forcast-block">
+				<div className="">
 					<p>time</p>
 					<span>
-						<TiWeatherShower className="show-weather-icon" />
+						<TiWeatherShower className="" />
 					</span>
 					<p>55 degrees</p>
 				</div>
-				<div className="forcast-block">
+				<div className="">
 					<p>time</p>
 					<span>
-						<TiWeatherShower className="show-weather-icon" />
+						<TiWeatherShower className="" />
 					</span>
 					<p>55 degrees</p>
 				</div>
-				<div className="forcast-block">
+				<div className="">
 					<p>time</p>
 					<span>
-						<TiWeatherShower className="show-weather-icon" />
+						<TiWeatherShower className="" />
 					</span>
 					<p>55 degrees</p>
 				</div>

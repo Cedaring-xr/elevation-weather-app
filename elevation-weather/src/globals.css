@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.button {
+		@apply rounded-lg p-1 px-3 m-2 bg-neutral-900 text-neutral-100 border-[1px];
+	}
+}

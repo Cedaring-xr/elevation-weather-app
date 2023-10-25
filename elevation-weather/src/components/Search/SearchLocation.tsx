@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { BiSearchAlt2 } from 'react-icons/bi'
+import { WiDegrees } from 'react-icons/wi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
 import Forcast from '../forcast/Forcast'
@@ -9,14 +10,28 @@ const SearchLocation = () => {
 	const [location, setLocation] = useState('')
 
 	return (
-		<div className="main-container">
-			<div className="search-container">
-				<h3>Weather by Location</h3>
-				<p>Search by Location</p>
-				<button>current elevation</button>
-				<input className="search-input" type="textbox" placeholder="search major city"></input>
-				<div className="icon-box">
-					<BiSearchAlt2 />
+		<div className="">
+			<p>Search by Location</p>
+			<button className="button w-[200px]">current Location</button>
+			<div className="flex flex-row">
+				<div className="flex flex-col justify-center relative pr-2 w-4/5">
+					<input
+						type="text"
+						placeholder="search by location..."
+						className="text-md p-2 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase"
+					></input>
+					<div className="absolute right-0 top-0 bg-slate-900 h-[40px] w-[50px] rounded-r-lg">
+						<BiSearchAlt2 className="text-4xl text-white m-1 mx-2 transition ease-out hover:scale-110" />
+					</div>
+				</div>
+				<div className="flex flex-row w-1/5 items-center pl-4">
+					<button name="metric" className="text-xl text-white">
+						&deg;C
+					</button>
+					<p className="text-2xl text-white font-light m-1">|</p>
+					<button name="imperial" className="text-xl text-white">
+						&deg;F
+					</button>
 				</div>
 			</div>
 			<div className="location-container">

@@ -5,11 +5,11 @@ const Navbar = () => {
 		<div className="navbar-container">
 			<ul className="navbar">
 				<li className="nav-item">
-					<a className='btn btn-success'>Nav item 1</a>
+					<a className="btn btn-success">Nav item 1</a>
 				</li>
 				<li className="nav-item">
-          <a className='btn btn-success'>Nav item 2</a>
-        </li>
+					<a className="btn btn-success">Nav item 2</a>
+				</li>
 				<li className="nav-item">
 					<a className="btn btn-success">Nav item 3</a>
 				</li>
