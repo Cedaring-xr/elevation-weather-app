@@ -7,46 +7,44 @@ type ForcastProps = {
 
 const Forcast: React.FC<ForcastProps> = ({ title }) => {
 	return (
-		<div className="">
-			<div className="">
+		<div className="text-white">
+			<div className="mt-12">
 				<h4>{title}</h4>
-				<hr />
+				<hr className="my-1" />
 			</div>
-			<div className="">
-				<div className="">
-					<p>time</p>
-					<span>
-						<TiWeatherShower className="" />
-					</span>
-					<p>55 degrees</p>
+			<div className="flex items-center justify-between">
+				<div className="flex flex-col items-center justify-center">
+					<p>Monday</p>
+					<TiWeatherShower className="text-3xl" />
+					<p>55&deg;</p>
 				</div>
 				<div className="">
-					<p>time</p>
+					<p>Tuesday</p>
 					<span>
-						<TiWeatherShower className="" />
+						<TiWeatherShower className="text-3xl" />
 					</span>
-					<p>55 degrees</p>
+					<p>55&deg;</p>
 				</div>
 				<div className="">
-					<p>time</p>
+					<p>Wednesday</p>
 					<span>
-						<TiWeatherShower className="" />
+						<TiWeatherShower className="text-3xl" />
 					</span>
-					<p>55 degrees</p>
+					<p>55&deg;</p>
 				</div>
 				<div className="">
-					<p>time</p>
+					<p>Thursday</p>
 					<span>
-						<TiWeatherShower className="" />
+						<TiWeatherShower className="text-3xl" />
 					</span>
-					<p>55 degrees</p>
+					<p>55&deg;</p>
 				</div>
 				<div className="">
-					<p>time</p>
+					<p>Friday</p>
 					<span>
-						<TiWeatherShower className="" />
+						<TiWeatherShower className="text-3xl" />
 					</span>
-					<p>55 degrees</p>
+					<p>55&deg;</p>
 				</div>
 			</div>
 		</div>

@@ -40,10 +40,7 @@ const SearchLocation = () => {
 			<div className="weather-container">
 				<CurrentWeather />
 			</div>
-			<div className="forcast-container">
-				<Forcast title="asdfasdf" />
-				<Forcast title="Daily Forcast" />
-			</div>
+			<div className="forcast-container"></div>
 		</div>
 	)
 }
