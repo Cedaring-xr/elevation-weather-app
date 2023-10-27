@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from './components/Header'
 import SlideSelect from './components/SlideSelect'
 import QuickLinks from './components/nav/QuickLinks'
@@ -16,6 +16,7 @@ function App() {
 			<Header />
 			<div className="mx-auto max-w-screen-lg py-5 px-32 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400">
 				<QuickLinks cities={citiesList} />
+
 				<SlideSelect />
 			</div>
 		</div>

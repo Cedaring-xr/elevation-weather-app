@@ -5,14 +5,57 @@ import { WiDegrees } from 'react-icons/wi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
 import Forcast from '../forcast/Forcast'
+import getFormattedWeatherData from '../../services/weatherService'
+
+type Weather = {
+	timezone: string
+	daily: any[]
+	hourly: any[]
+	lat: number
+	lon: number
+	temp: any
+	feels_like: any
+	temp_min: any
+	temp_max: any
+	humidity: any
+	name: any
+	dt: any
+	country: any
+	sunrise: any
+	sunset: any
+	details: any
+	icon: any
+	speed: any
+}
 
 const SearchLocation = () => {
-	const [location, setLocation] = useState('')
+	// const [location, setLocation] = useState('')
+	const [query, setQuery] = useState({ q: 'Denver' })
+	const [units, setUnits] = useState('Imperial')
+	const [weather, setWeather] = useState<Weather | null>(null)
+
+	const fetchWeather = async () => {
+		console.log('fetch')
+		const data = await getFormattedWeatherData({ q: 'London' })
+		console.log(data)
+	}
+
+	useEffect(() => {
+		const fetchWeather = async () => {
+			await getFormattedWeatherData({ ...query, units }).then((data) => {
+				setWeather(data)
+			})
+		}
+
+		fetchWeather()
+	}, [query, units])
 
 	return (
 		<div className="">
 			<p>Search by Location</p>
-			<button className="button w-[200px]">current Location</button>
+			<button className="button w-[200px]" onClick={() => fetchWeather}>
+				current Location
+			</button>
 			<div className="flex flex-row">
 				<div className="flex flex-col justify-center relative pr-2 w-4/5">
 					<input
