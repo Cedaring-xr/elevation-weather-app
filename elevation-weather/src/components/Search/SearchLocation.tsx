@@ -1,13 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { BiSearchAlt2 } from 'react-icons/bi'
-import { WiDegrees } from 'react-icons/wi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
-import Forcast from '../forcast/Forcast'
 import getFormattedWeatherData from '../../services/weatherService'
+import Forcast from '../forcast/Forcast'
 
-type Weather = {
+type TweatherData = {
 	timezone: string
 	daily: any[]
 	hourly: any[]
@@ -32,7 +31,7 @@ const SearchLocation = () => {
 	// const [location, setLocation] = useState('')
 	const [query, setQuery] = useState({ q: 'Denver' })
 	const [units, setUnits] = useState('Imperial')
-	const [weather, setWeather] = useState<Weather | null>(null)
+	const [weather, setWeather] = useState<TweatherData | null>(null)
 
 	const fetchWeather = async () => {
 		console.log('fetch')
@@ -78,12 +77,15 @@ const SearchLocation = () => {
 				</div>
 			</div>
 			<div className="location-container">
-				<TimeAndLocation />
+				<TimeAndLocation weather={weather} />
 			</div>
 			<div className="weather-container">
-				<CurrentWeather />
+				<CurrentWeather weather={weather} />
 			</div>
-			<div className="forcast-container"></div>
+			<div className="forcast-container">
+				<Forcast title="Hourly Forcast" items={weather?.hourly} />
+				<Forcast title="Daily Forcast" items={weather?.daily} />
+			</div>
 		</div>
 	)
 }

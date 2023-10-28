@@ -44,7 +44,6 @@ const formatCurrentWeather = (data) => {
 // uses onecall api to format data
 const formatForecastWeather = (data) => {
 	let { timezone, daily, hourly } = data
-	console.log(data)
 	daily = daily.slice(1, 6).map((d) => {
 		return {
 			title: formatToLocalTime(d.dt, timezone, 'ccc'),
@@ -56,7 +55,7 @@ const formatForecastWeather = (data) => {
 	hourly = hourly.slice(1, 6).map((d) => {
 		return {
 			title: formatToLocalTime(d.dt, timezone, 'hh:mm a'),
-			temp: d.temp.day,
+			temp: d.temp,
 			icon: d.weather[0].icon
 		}
 	})
@@ -64,11 +63,20 @@ const formatForecastWeather = (data) => {
 	return { timezone, daily, hourly }
 }
 
-const getWeatherData = (infoType, searchParams) => {
+const getWeatherData = async (infoType, searchParams) => {
 	const url = new URL(BASE_URL + infoType)
 	url.search = new URLSearchParams({ ...searchParams, appid: API_KEY })
 
-	return fetch(url).then((res) => res.json())
+	try {
+		const response = await fetch(url)
+		if (!response.ok) {
+			throw new Error('Error with network response')
+		}
+		const data = await response.json()
+		return data
+	} catch (error) {
+		console.log('Fetch Weather Error', error)
+	}
 }
 
 const getFormattedWeatherData = async (searchParams) => {
