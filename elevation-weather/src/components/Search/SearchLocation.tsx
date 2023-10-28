@@ -5,6 +5,7 @@ import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
 import getFormattedWeatherData from '../../services/weatherService'
 import Forcast from '../forcast/Forcast'
+import QuickLinks from '../nav/QuickLinks'
 
 type TweatherData = {
 	timezone: string
@@ -29,14 +30,71 @@ type TweatherData = {
 
 const SearchLocation = () => {
 	// const [location, setLocation] = useState('')
-	const [query, setQuery] = useState({ q: 'Denver' })
+	const [query, setQuery] = useState<{ q: string } | { lat: number; lon: number }>({ q: 'Denver' })
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
+	const [city, setCity] = useState('')
 
-	const fetchWeather = async () => {
-		console.log('fetch')
-		const data = await getFormattedWeatherData({ q: 'London' })
-		console.log(data)
+	const handleSearchClick = () => {
+		if (city) {
+			setQuery({ q: city })
+		}
+	}
+
+	const formatBackground = () => {
+		if (!weather) return 'from-cyan-700 to blue-700'
+		const threshold = units === 'metric' ? 20 : 60
+		//todo: normalize weather.temp for both celcius and farenheit
+		const thresholdValue = Math.round(weather.temp / 10)
+		console.log(thresholdValue)
+		switch (thresholdValue) {
+			case 0:
+				return 'from-blue-700 to-blue-900'
+			case 1:
+				return 'from-blue-700 to-purple-300'
+			case 3:
+				return 'from-blue-700 to-blue-900'
+			case 4:
+				return 'from-purple-400 to-teal-400'
+			case 5:
+				return 'from-teal-400 to-teal-700'
+			case 6:
+				return 'from-orange-400 to-green-600'
+			case 7:
+				return 'from-yellow-400 to-blue-700'
+			case 8:
+				return 'from-blue-400 to-blue-600'
+			case 9:
+				return 'from-yellow-400 to-red-600'
+			case 10:
+				return 'from-yellow-400 to-orange-600'
+
+			default:
+				return 'from-slate-200 to-stone-900'
+		}
+	}
+
+	const handleLocationClick = () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((position) => {
+				let lat = position.coords.latitude
+				let lon = position.coords.longitude
+
+				setQuery({ lat, lon })
+			})
+		} else {
+			alert('Application does not have permission to use local geolocation')
+		}
+	}
+
+	const handleSearch = (e: any) => {
+		e.preventDefault()
+		setQuery({ q: city })
+	}
+
+	const handleUnitsChange = (e: any) => {
+		const selectedUnit = e.currentTarget.name
+		if (units !== selectedUnit) setUnits(selectedUnit)
 	}
 
 	useEffect(() => {
@@ -50,41 +108,61 @@ const SearchLocation = () => {
 	}, [query, units])
 
 	return (
-		<div className="">
-			<p>Search by Location</p>
-			<button className="button w-[200px]" onClick={() => fetchWeather}>
-				current Location
-			</button>
-			<div className="flex flex-row">
-				<div className="flex flex-col justify-center relative pr-2 w-4/5">
-					<input
-						type="text"
-						placeholder="search by location..."
-						className="text-md p-2 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase"
-					></input>
-					<div className="absolute right-0 top-0 bg-slate-900 h-[40px] w-[50px] rounded-r-lg">
-						<BiSearchAlt2 className="text-4xl text-white m-1 mx-2 transition ease-out hover:scale-110" />
+		<div
+			id="main-container"
+			className={`max-w-screen-lg py-5 px-4 md:px-12 lg:px-32 bg-gradient-to-br ${formatBackground()} h-fit shadow-xl shadow-gray-400 absolute top-[200px] border-2 border-stone-800 md:rounded-3xl`}
+		>
+			<div className="">
+				<QuickLinks setQuery={setQuery} />
+				<p>Search by Location</p>
+				<button className="button w-[200px]" onClick={handleLocationClick}>
+					current Location
+				</button>
+				<div className="flex flex-row">
+					<div className="flex flex-col justify-center relative pr-2 w-4/5">
+						<form onSubmit={handleSearch}>
+							<input
+								value={city}
+								onChange={(e) => setCity(e.currentTarget.value)}
+								type="text"
+								placeholder="search by location..."
+								className="text-md p-2 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase"
+							></input>
+						</form>
+
+						<div
+							className="absolute right-0 top-0 bg-slate-900 h-[40px] w-[50px] rounded-r-lg"
+							onClick={handleSearchClick}
+						>
+							<BiSearchAlt2 className="text-4xl text-white m-1 mx-2 transition ease-out hover:scale-110" />
+						</div>
+					</div>
+					<div className="flex flex-row w-1/5 items-center pl-4">
+						<button name="metric" className="text-xl text-white" onClick={handleUnitsChange}>
+							&deg;C
+						</button>
+						<p className="text-2xl text-white font-light m-1">|</p>
+						<button name="imperial" className="text-xl text-white" onClick={handleUnitsChange}>
+							&deg;F
+						</button>
 					</div>
 				</div>
-				<div className="flex flex-row w-1/5 items-center pl-4">
-					<button name="metric" className="text-xl text-white">
-						&deg;C
-					</button>
-					<p className="text-2xl text-white font-light m-1">|</p>
-					<button name="imperial" className="text-xl text-white">
-						&deg;F
-					</button>
-				</div>
-			</div>
-			<div className="location-container">
-				<TimeAndLocation weather={weather} />
-			</div>
-			<div className="weather-container">
-				<CurrentWeather weather={weather} />
-			</div>
-			<div className="forcast-container">
-				<Forcast title="Hourly Forcast" items={weather?.hourly} />
-				<Forcast title="Daily Forcast" items={weather?.daily} />
+				{weather ? (
+					<>
+						<div className="location-container">
+							<TimeAndLocation weather={weather} />
+						</div>
+						<div className="weather-container">
+							<CurrentWeather weather={weather} />
+						</div>
+						<div className="forcast-container">
+							<Forcast title="Hourly Forcast" items={weather?.hourly} />
+							<Forcast title="Daily Forcast" items={weather?.daily} />
+						</div>
+					</>
+				) : (
+					''
+				)}
 			</div>
 		</div>
 	)

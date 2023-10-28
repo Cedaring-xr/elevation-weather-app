@@ -1,19 +1,31 @@
 import React from 'react'
 
-type LinkProps = {
-	cities: {
-		id: number
-		name: string
-	}[]
-}
+// type LinkProps = {
+// 	cities: {
+// 		id: number
+// 		name: string
+// 	}[]
+// }
 
-const QuickLinks: React.FC<LinkProps> = ({ cities }) => {
+const citiesList = [
+	{ id: 1, name: 'London' },
+	{ id: 2, name: 'Tokyo' },
+	{ id: 3, name: 'New York' },
+	{ id: 4, name: 'Denver' }
+]
+
+const QuickLinks = ({ setQuery }: any) => {
+	const cities = citiesList
 	return (
-		<div className="flex flex-row justify-around items-center m-4 px-8 bg-neutral-100 rounded-lg">
+		<div className="flex flex-row justify-around items-center m-1 lg:m-4 px-2 md:px-8 bg-neutral-100 rounded-lg text-sm md:text-xl">
 			{cities.map((city) => (
-				<div key={city.id} className="uppercase font-bold text-stone-800">
+				<button
+					key={city.id}
+					className="uppercase font-bold text-stone-800"
+					onClick={() => setQuery({ q: city.name })}
+				>
 					{city.name}
-				</div>
+				</button>
 			))}
 		</div>
 	)
