@@ -2,14 +2,14 @@ import React from 'react'
 
 const Header = () => {
 	return (
-		<div className="bg-stone-900">
+		<div className="w-screen overflow-hidden h-[220px] bg-stone-900">
 			<img
-				className="w-screen min-h-[220px] xl:max-w-[1600px] max-h-[220px] md:max-h-[280px] mx-auto"
+				className="w-screen min-h-[200px] xl:max-w-[1800px] max-h-[220px] mx-auto"
 				src="/assets/images/headerBackground.gif"
 			/>
-			<div className="absolute top-0 bg-slate-700 p-4 rounded-md m-2 opacity-80">
+			<div className="absolute top-0 bg-slate-800 py-3 px-4 md:px-12 lg:px-24 lg:ml-[28%] rounded-md m-2 opacity-80">
 				<h1 className="font-bold text-4xl text-neutral-50 sans-font">Elevation Weather App</h1>
-				<h4 className="text-neutral-50 serif-font">realtime weather search based on location or elevation</h4>
+				<h4 className="text-neutral-50 serif-font">real-time weather search</h4>
 			</div>
 		</div>
 	)

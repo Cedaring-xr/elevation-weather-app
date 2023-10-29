@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
-import getFormattedWeatherData from '../../services/weatherService'
+import getFormattedWeatherData from '../../utils/weatherService'
 import Forcast from '../forcast/Forcast'
 import QuickLinks from '../nav/QuickLinks'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 type TweatherData = {
 	timezone: string
@@ -29,7 +31,6 @@ type TweatherData = {
 }
 
 const SearchLocation = () => {
-	// const [location, setLocation] = useState('')
 	const [query, setQuery] = useState<{ q: string } | { lat: number; lon: number }>({ q: 'Denver' })
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
@@ -46,31 +47,31 @@ const SearchLocation = () => {
 		const threshold = units === 'metric' ? 20 : 60
 		//todo: normalize weather.temp for both celcius and farenheit
 		const thresholdValue = Math.round(weather.temp / 10)
-		console.log(thresholdValue)
 		switch (thresholdValue) {
 			case 0:
-				return 'from-blue-700 to-blue-900'
+				return 'from-zinc-400 to-sky-800'
 			case 1:
-				return 'from-blue-700 to-purple-300'
+				return 'from-zinc-400 to-sky-800'
+			case 2:
+				return 'from-zinc-400 to-sky-700'
 			case 3:
-				return 'from-blue-700 to-blue-900'
+				return 'from-zinc-400 to-sky-700'
 			case 4:
-				return 'from-purple-400 to-teal-400'
+				return 'from-cyan-600 to-sky-800'
 			case 5:
-				return 'from-teal-400 to-teal-700'
+				return 'from-cyan-600 to-sky-800'
 			case 6:
-				return 'from-orange-400 to-green-600'
+				return 'from-emerald-400 to-blue-600'
 			case 7:
-				return 'from-yellow-400 to-blue-700'
+				return 'from-emerald-400 to-blue-700'
 			case 8:
-				return 'from-blue-400 to-blue-600'
+				return 'from-amber-600 to-orange-700'
 			case 9:
-				return 'from-yellow-400 to-red-600'
+				return 'from-amber-600 to-orange-700'
 			case 10:
-				return 'from-yellow-400 to-orange-600'
-
+				return 'from-amber-600 to-rose-600'
 			default:
-				return 'from-slate-200 to-stone-900'
+				return 'from-cyan-600 to-sky-800'
 		}
 	}
 
@@ -99,6 +100,9 @@ const SearchLocation = () => {
 
 	useEffect(() => {
 		const fetchWeather = async () => {
+			const message = query ? query : 'current location'
+			console.log('query', message)
+			toast.info('Fetching weather for' + message)
 			await getFormattedWeatherData({ ...query, units }).then((data) => {
 				setWeather(data)
 			})
@@ -110,7 +114,7 @@ const SearchLocation = () => {
 	return (
 		<div
 			id="main-container"
-			className={`max-w-screen-lg py-5 px-4 md:px-12 lg:px-32 bg-gradient-to-br ${formatBackground()} h-fit shadow-xl shadow-gray-400 absolute top-[200px] border-2 border-stone-800 md:rounded-3xl`}
+			className={`max-w-screen-lg py-12 px-4 md:px-12 lg:px-32 bg-gradient-to-br ${formatBackground()} h-fit shadow-xl shadow-gray-400 absolute top-[170px] border-2 border-stone-800 md:rounded-3xl`}
 		>
 			<div className="">
 				<QuickLinks setQuery={setQuery} />
@@ -164,6 +168,7 @@ const SearchLocation = () => {
 					''
 				)}
 			</div>
+			<ToastContainer autoClose={5000} theme="colored" newestOnTop={true} />
 		</div>
 	)
 }

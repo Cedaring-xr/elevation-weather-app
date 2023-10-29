@@ -17,7 +17,7 @@ const citiesList = [
 const QuickLinks = ({ setQuery }: any) => {
 	const cities = citiesList
 	return (
-		<div className="flex flex-row justify-around items-center m-1 lg:m-4 px-2 md:px-8 bg-neutral-100 rounded-lg text-sm md:text-xl">
+		<div className="flex flex-row justify-around items-center m-1 lg:m-4 px-2 md:px-8 bg-neutral-100 rounded-lg text-sm md:text-base">
 			{cities.map((city) => (
 				<button
 					key={city.id}

@@ -7,7 +7,7 @@ module.exports = {
 			sm: '400px',
 			md: '650px',
 			lg: '1000px',
-			xl: '1400px'
+			xl: '1620px'
 		}
 	},
 	plugins: []

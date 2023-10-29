@@ -7,6 +7,10 @@ const BASE_URL = process.env.REACT_APP_BASE_URL
 const formatToLocalTime = (secs, zone, format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a") =>
 	DateTime.fromSeconds(secs).setZone(zone).toFormat(format)
 
+const formatToTime = (secs, format = 'h:mm a') => {
+	return DateTime.fromSeconds(secs).toFormat(format)
+}
+
 const iconsUrlFromCode = (code) => `https://openweathermap.org/img/wn/${code}@2x.png`
 
 const formatCurrentWeather = (data) => {
@@ -95,4 +99,4 @@ const getFormattedWeatherData = async (searchParams) => {
 }
 
 export default getFormattedWeatherData
-export { formatToLocalTime, iconsUrlFromCode }
+export { formatToTime, formatToLocalTime, iconsUrlFromCode }

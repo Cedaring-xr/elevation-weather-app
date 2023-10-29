@@ -1,6 +1,6 @@
 import React from 'react'
 import { TiWeatherShower } from 'react-icons/ti'
-import { iconsUrlFromCode } from '../../services/weatherService'
+import { iconsUrlFromCode } from '../../utils/weatherService'
 
 type ForcastProps = {
 	title: string
@@ -11,7 +11,7 @@ const Forcast: React.FC<ForcastProps> = ({ title, items }: any) => {
 	return (
 		<div className="text-white">
 			<div className="mt-12">
-				<h4>{title}</h4>
+				<h4 className="text-xl">{title}</h4>
 				<hr className="my-1" />
 			</div>
 			<div className="flex items-center justify-between">

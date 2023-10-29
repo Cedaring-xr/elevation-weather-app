@@ -7,6 +7,7 @@
 @layer base {
 	html {
 		font-family: 'Merriweather', serif;
+		background-color: rgb(77, 76, 75);
 	}
 }
 
@@ -19,5 +20,9 @@
 	}
 	.button {
 		@apply rounded-lg p-1 px-3 m-2 bg-neutral-900 text-neutral-100 border-[1px];
+	}
+	.background {
+		background-image: url('assets/blandAbstractBackground2.png');
+		background-size: cover;
 	}
 }
