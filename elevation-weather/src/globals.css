@@ -19,7 +19,7 @@
 		font-family: 'Kanit', sans-serif;
 	}
 	.button {
-		@apply rounded-lg p-1 px-3 m-2 bg-neutral-900 text-neutral-100 border-[1px];
+		@apply rounded-lg p-1 px-2 my-2 bg-zinc-800 text-neutral-100;
 	}
 	.background {
 		background-image: url('assets/blandAbstractBackground2.png');

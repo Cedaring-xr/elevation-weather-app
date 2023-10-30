@@ -113,15 +113,16 @@ const SearchLocation = () => {
 
 	return (
 		<div
-			id="main-container"
-			className={`max-w-screen-lg py-12 px-4 md:px-12 lg:px-32 bg-gradient-to-br ${formatBackground()} h-fit shadow-xl shadow-gray-400 absolute top-[170px] border-2 border-stone-800 md:rounded-3xl`}
+			id="search-location-container"
+			className={` bg-gradient-to-br ${formatBackground()} h-fit md:px-12 lg:px-32 pt-8 pb-12 px-4 shadow-xl shadow-gray-400`}
 		>
-			<div className="">
+			<div>
 				<QuickLinks setQuery={setQuery} />
-				<p>Search by Location</p>
-				<button className="button w-[200px]" onClick={handleLocationClick}>
-					current Location
-				</button>
+				<div className="flex justify-center mt-8">
+					<button className="button w-[160px] sans-font" onClick={handleLocationClick}>
+						Local Weather
+					</button>
+				</div>
 				<div className="flex flex-row">
 					<div className="flex flex-col justify-center relative pr-2 w-4/5">
 						<form onSubmit={handleSearch}>
@@ -129,8 +130,8 @@ const SearchLocation = () => {
 								value={city}
 								onChange={(e) => setCity(e.currentTarget.value)}
 								type="text"
-								placeholder="search by location..."
-								className="text-md p-2 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase"
+								placeholder="search by City..."
+								className="text-md p-2 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase rounded-l-lg"
 							></input>
 						</form>
 
