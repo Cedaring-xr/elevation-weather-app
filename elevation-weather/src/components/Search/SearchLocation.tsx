@@ -119,7 +119,7 @@ const SearchLocation = () => {
 			<div>
 				<QuickLinks setQuery={setQuery} />
 				<div className="flex justify-center mt-8">
-					<button className="button w-[160px] sans-font" onClick={handleLocationClick}>
+					<button className="button" onClick={handleLocationClick}>
 						Local Weather
 					</button>
 				</div>
