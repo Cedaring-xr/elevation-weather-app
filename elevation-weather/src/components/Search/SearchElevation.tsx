@@ -31,10 +31,31 @@ type TweatherData = {
 
 const SearchElevation = () => {
 	const [bannerVisible, setBannerVisible] = useState(true)
-	const [query, setQuery] = useState<{ q: string } | { lat: number; lon: number }>({ q: 'Denver' })
+	const [query, setQuery] = useState<{ q: string }>({ q: 'Denver' })
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
 	const [currentWeather, setCurrentWeather] = useState(false)
+
+	//state for child component
+	const [elevation, setElevation] = useState<string>('7,030')
+	const [isDragging, setIsDragging] = useState(false)
+
+	const handleDrag = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+		if (!isDragging) return
+		const rect = e.currentTarget.getBoundingClientRect()
+		const y = Math.max(0, Math.min(e.clientY - rect.top, rect.height))
+		const percent: number = Math.max(0, Math.min((y / rect.height) * 100, 100))
+		if (percent < 2) {
+			setSliderPosition(2)
+		} else if (percent > 98) {
+			setSliderPosition(98)
+		} else {
+			setSliderPosition(percent)
+		}
+		const elevationPercent = 100 - percent
+		const elevationRange: string = Math.round(elevationPercent * 65.38 + 3619).toLocaleString() //low = Lamar(3619), hight = Leadville(10157)
+		setElevation(elevationRange)
+	}
 
 	const handleCurrentElevationSearch = () => {
 		if (navigator.geolocation) {
@@ -52,10 +73,12 @@ const SearchElevation = () => {
 
 	const handleElevationSearch = () => {
 		// filter the list of all cities to only the closest 5 that match the given elevation
+
 		// need to get the search elevation from the child component
 
 		// ping weather api for each city and return current weather for each one
 		// display the city, elevation, and weather for each one
+
 		const fetchWeather = async () => {
 			const message = query ? query : 'current location'
 			console.log('query', message)
@@ -68,10 +91,6 @@ const SearchElevation = () => {
 		// fetchWeather()
 	}
 
-	const closeBanner = () => {
-		setBannerVisible(false)
-	}
-
 	return (
 		<div className="bg-gradient-to-br from-cyan-600 to-sky-800 h-fit md:px-12 lg:px-32 py-8 md:py-12 shadow-xl shadow-gray-400 flex flex-col">
 			<h3 className="m-1 lg:m-4 px-4 md:px-8 py-1 bg-neutral-100 rounded-lg md:text-xl sans-font text-center uppercase font-bold text-stone-800 max-w-[500px] self-center">
@@ -79,7 +98,7 @@ const SearchElevation = () => {
 			</h3>
 			{bannerVisible && (
 				<div className="bg-fuchsia-800 text-white my-4 p-2 pt-4 md:p-4 border-2 border-black relative">
-					<GrFormClose className="absolute top-0 right-0 text-2xl" onClick={closeBanner} />
+					<GrFormClose className="absolute top-0 right-0 text-2xl" onClick={() => setBannerVisible(false)} />
 					This is a test placeholder feature for getting weather based on a given elevation height. Currently
 					I am limiting the search to cities whithin Colorado because it has a wide range of elevations.
 				</div>
@@ -92,7 +111,12 @@ const SearchElevation = () => {
 			</span>
 			<div id="elevation container" className="relative w-4/5 flex flex-row mx-auto">
 				<div id="slider-container">
-					<ComparisonSlider beforeImage={isoMtn} afterImage={isoMtn2} />
+					<ComparisonSlider
+						beforeImage={isoMtn}
+						afterImage={isoMtn2}
+						elevation={elevation}
+						handleDrag={handleDrag}
+					/>
 				</div>
 			</div>
 			<div className="flex flex-row m-4 justify-around md:mx-12">

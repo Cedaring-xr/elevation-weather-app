@@ -1,7 +1,244 @@
 {
 	"cities": [
 		{
-			"name": "Denver"
+			"name": "Leadville",
+			"elevation": 10157,
+			"location": {
+				"lat": 39.2508,
+				"lon": 106.2925
+			}
+		},
+		{
+			"name": "Fairplay",
+			"elevation": 9954,
+			"location": {
+				"lat": 39.2247,
+				"lon": 106.002
+			}
+		},
+		{
+			"name": "Breckenridge",
+			"elevation": 9728,
+			"location": {
+				"lat": 39.4817,
+				"lon": 106.0384
+			}
+		},
+		{
+			"name": "Ophir",
+			"elevation": 9695,
+			"location": {
+				"lat": 37.8569,
+				"lon": 107.8326
+			}
+		},
+		{
+			"name": "Mountain Village",
+			"elevation": 9600,
+			"location": {
+				"lat": 37.9314,
+				"lon": 107.8565
+			}
+		},
+		{
+			"name": "Cripple Creek",
+			"elevation": 9455,
+			"location": {
+				"lat": 38.7467,
+				"lon": 105.1783
+			}
+		},
+		{
+			"name": "Silverton",
+			"elevation": 9308,
+			"location": {
+				"lat": 37.8119,
+				"lon": 107.6645
+			}
+		},
+		{
+			"name": "Pitkin",
+			"elevation": 9216,
+			"location": {
+				"lat": 38.6092,
+				"lon": 106.5167
+			}
+		},
+		{
+			"name": "Keystone",
+			"elevation": 9173,
+			"location": {
+				"lat": 39.5994,
+				"lon": 105.9872
+			}
+		},
+		{
+			"name": "Silver Plume",
+			"elevation": 9101,
+			"location": {
+				"lat": 39.6961,
+				"lon": 105.7258
+			}
+		},
+		{
+			"name": "Frisco",
+			"elevation": 9075,
+			"location": {
+				"lat": 39.5744,
+				"lon": 106.0975
+			}
+		},
+		{
+			"name": "Winter Park",
+			"elevation": 9052,
+			"location": {
+				"lat": 39.8917,
+				"lon": 105.7631
+			}
+		},
+		{
+			"name": "Crested butte",
+			"elevation": 8924,
+			"location": {
+				"lat": 38.8697,
+				"lon": 106.9878
+			}
+		},
+		{
+			"name": "Creede",
+			"elevation": 8799,
+			"location": {
+				"lat": 37.8492,
+				"lon": 106.9264
+			}
+		},
+		{
+			"name": "Telluride",
+			"elevation": 8793,
+			"location": {
+				"lat": 37.9375,
+				"lon": 107.8123
+			}
+		},
+		{
+			"name": "Silverthorne",
+			"elevation": 8757,
+			"location": {
+				"lat": 39.6321,
+				"lon": 106.0743
+			}
+		},
+		{
+			"name": "Lake City",
+			"elevation": 8661,
+			"location": {
+				"lat": 38.03,
+				"lon": 107.3153
+			}
+		},
+		{
+			"name": "Fraser",
+			"elevation": 8579,
+			"location": {
+				"lat": 39.945,
+				"lon": 105.8172
+			}
+		},
+		{
+			"name": "Central City",
+			"elevation": 8497,
+			"location": {
+				"lat": 39.8019,
+				"lon": 105.5142
+			}
+		},
+		{
+			"name": "Woodland Park",
+			"elevation": 8481,
+			"location": {
+				"lat": 38.9939,
+				"lon": 105.0569
+			}
+		},
+		{
+			"name": "Nederland",
+			"elevation": 8232,
+			"location": {
+				"lat": 39.6914,
+				"lon": 105.5108
+			}
+		},
+		{
+			"name": "Snowmass Village",
+			"elevation": 8209,
+			"location": {
+				"lat": 39.213,
+				"lon": 106.9378
+			}
+		},
+		{
+			"name": "Vail",
+			"elevation": 8189,
+			"location": {
+				"lat": 39.6403,
+				"lon": 106.3742
+			}
+		},
+		{
+			"name": "Walden",
+			"elevation": 8097,
+			"location": {
+				"lat": 40.7316,
+				"lon": 106.2836
+			}
+		},
+		{
+			"name": "Black Hawk",
+			"elevation": 8074,
+			"location": {
+				"lat": 39.8038,
+				"lon": 105.4952
+			}
+		},
+		{
+			"name": "Buena Vista",
+			"elevation": 7959,
+			"location": {
+				"lat": 38.8422,
+				"lon": 106.1311
+			}
+		},
+		{
+			"name": "Crestone",
+			"elevation": 7930,
+			"location": {
+				"lat": 37.9964,
+				"lon": 105.6997
+			}
+		},
+		{
+			"name": "Aspen",
+			"elevation": 7890,
+			"location": {
+				"lat": 39.1911,
+				"lon": 106.8175
+			}
+		},
+		{
+			"name": "Ouray",
+			"elevation": 7792,
+			"location": {
+				"lat": 38.0228,
+				"lon": 107.6714
+			}
+		},
+		{
+			"name": "Gunnison",
+			"elevation": 7703,
+			"location": {
+				"lat": 38.5458,
+				"lon": 106.9253
+			}
 		}
 	]
 }

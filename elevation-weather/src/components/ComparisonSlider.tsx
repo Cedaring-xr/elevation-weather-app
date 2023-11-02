@@ -4,23 +4,32 @@ import { TiArrowDownThick, TiArrowUpThick } from 'react-icons/ti'
 type SliderProps = {
 	beforeImage: string
 	afterImage: string
+	elevation: string
+	handleDrag: (event: MouseEvent) => {}
 }
 
-const ComparisonSlider: React.FC<SliderProps> = ({ beforeImage, afterImage }) => {
+const ComparisonSlider: React.FC<SliderProps> = ({ beforeImage, afterImage, elevation, handleDrag }) => {
 	const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
-	const [isDragging, setIsDragging] = useState(false)
-	const [elevation, setElevation] = useState<number>(7030)
 
-	const handleDrag = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-		if (!isDragging) return
-		const rect = e.currentTarget.getBoundingClientRect()
-		const y = Math.max(0, Math.min(e.clientY - rect.top, rect.height))
-		const percent: number = Math.max(0, Math.min((y / rect.height) * 100, 100))
-		const elevationPercent = 100 - percent
-		const elevationRange = elevationPercent * 65.38 + 3619 //low = Lamar(3619), hight = Leadville(10157)
-		setSliderPosition(percent)
-		setElevation(elevationRange)
-	}
+	// const [isDragging, setIsDragging] = useState(false)
+	// const [elevation, setElevation] = useState<string>('7,030')
+
+	// const handleDrag = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+	// 	if (!isDragging) return
+	// 	const rect = e.currentTarget.getBoundingClientRect()
+	// 	const y = Math.max(0, Math.min(e.clientY - rect.top, rect.height))
+	// 	const percent: number = Math.max(0, Math.min((y / rect.height) * 100, 100))
+	// 	if (percent < 2) {
+	// 		setSliderPosition(2)
+	// 	} else if (percent > 98) {
+	// 		setSliderPosition(98)
+	// 	} else {
+	// 		setSliderPosition(percent)
+	// 	}
+	// 	const elevationPercent = 100 - percent
+	// 	const elevationRange: string = Math.round(elevationPercent * 65.38 + 3619).toLocaleString() //low = Lamar(3619), hight = Leadville(10157)
+	// 	setElevation(elevationRange)
+	// }
 
 	const handleMouseDown = () => {
 		setIsDragging(true)
@@ -55,18 +64,18 @@ const ComparisonSlider: React.FC<SliderProps> = ({ beforeImage, afterImage }) =>
 					</div>
 				</div>
 			</div>
-			<div id="range-slider-container" className="p-4 w-1/6 overflow-hidden flex justify-center">
+			<div id="range-slider-container" className="px-4 w-1/6 overflow-hidden flex justify-center">
 				<div className="w-4 h-full bg-sky-100 border-2 border-black rounded-full">
 					<div
 						className="w-3 h-3 bg-black rounded-full absolute"
-						style={{ top: `calc(${sliderPosition}% - 1px)` }}
+						style={{ top: `calc(${sliderPosition}% - 5px)` }}
 					></div>
 				</div>
 				<span
-					className="text-white absolute -right-6 md:-right-2"
-					style={{ top: `calc(${sliderPosition}% - 1px)` }}
+					className="text-white absolute -right-8 lg:-right-3"
+					style={{ top: `calc(${sliderPosition}% - 10px)` }}
 				>
-					{elevation.toFixed()}
+					{elevation}
 				</span>
 			</div>
 		</div>
