@@ -5,12 +5,12 @@ import { BsThermometerSun } from 'react-icons/bs'
 import { BsThermometerSnow } from 'react-icons/bs'
 
 const CurrentWeather = ({
-	weather: { details, icon, temp, temp_max, temp_min, sunrise, sunset, speed, feels_like, timezone, humidity }
+	weather: { details, icon, temp, temp_max, temp_min, sunrise, sunset, speed, feels_like, humidity }
 }: any) => {
 	return (
-		<div className="">
-			<div className="flex items-center justify-center py-6">
-				<p className="text-xl text-cyan-300">{details}</p>
+		<div>
+			<div className="flex items-center justify-center pt-6 pb-2">
+				<p className="text-xl text-white">{details}</p>
 			</div>
 			{details ? (
 				<>

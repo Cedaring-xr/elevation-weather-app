@@ -239,6 +239,206 @@
 				"lat": 38.5458,
 				"lon": 106.9253
 			}
+		},
+		{
+			"name": "Monte Vista",
+			"elevation": 7664,
+			"location": {
+				"lat": 37.5792,
+				"lon": 106.1481
+			}
+		},
+		{
+			"name": "Sawpit",
+			"elevation": 7592,
+			"location": {
+				"lat": 37.9953,
+				"lon": 108.0017
+			}
+		},
+		{
+			"name": "Moffat",
+			"elevation": 7566,
+			"location": {
+				"lat": 37.9989,
+				"lon": 105.91
+			}
+		},
+		{
+			"name": "Alamosa",
+			"elevation": 7543,
+			"location": {
+				"lat": 37.4694,
+				"lon": 105.87
+			}
+		},
+		{
+			"name": "Estes Park",
+			"elevation": 7530,
+			"location": {
+				"lat": 40.3772,
+				"lon": 105.5217
+			}
+		},
+		{
+			"name": "Idaho Springs",
+			"elevation": 7526,
+			"location": {
+				"lat": 39.7425,
+				"lon": 105.5136
+			}
+		},
+		{
+			"name": "Poncha Springs",
+			"elevation": 7470,
+			"location": {
+				"lat": 38.5128,
+				"lon": 106.0772
+			}
+		},
+		{
+			"name": "Pagosa Springs",
+			"elevation": 7126,
+			"location": {
+				"lat": 37.2695,
+				"lon": 107.0098
+			}
+		},
+		{
+			"name": "Salida",
+			"elevation": 7083,
+			"location": {
+				"lat": 38.5347,
+				"lon": 105.9989
+			}
+		},
+		{
+			"name": "Ridgway",
+			"elevation": 7047,
+			"location": {
+				"lat": 38.1528,
+				"lon": 107.6717
+			}
+		},
+		{
+			"name": "Norwood",
+			"elevation": 7011,
+			"location": {
+				"lat": 38.1305,
+				"lon": 108.2923
+			}
+		},
+		{
+			"name": "Dolores",
+			"elevation": 6936,
+			"location": {
+				"lat": 37.4739,
+				"lon": 108.5045
+			}
+		},
+		{
+			"name": "Dove Creek",
+			"elevation": 6844,
+			"location": {
+				"lat": 37.7661,
+				"lon": 108.9059
+			}
+		},
+		{
+			"name": "Steamboat Springs",
+			"elevation": 6732,
+			"location": {
+				"lat": 40.485,
+				"lon": 106.8317
+			}
+		},
+		{
+			"name": "Eagle",
+			"elevation": 6601,
+			"location": {
+				"lat": 39.6553,
+				"lon": 106.8287
+			}
+		},
+		{
+			"name": "Durango",
+			"elevation": 6532,
+			"location": {
+				"lat": 37.2753,
+				"lon": 107.8801
+			}
+		},
+		{
+			"name": "Ignacio",
+			"elevation": 6453,
+			"location": {
+				"lat": 37.115,
+				"lon": 107.6331
+			}
+		},
+		{
+			"name": "Manitou Springs",
+			"elevation": 6358,
+			"location": {
+				"lat": 38.8597,
+				"lon": 104.9172
+			}
+		},
+		{
+			"name": "Gypsum",
+			"elevation": 6312,
+			"location": {
+				"lat": 39.6469,
+				"lon": 106.9517
+			}
+		},
+		{
+			"name": "Meeker",
+			"elevation": 6240,
+			"location": {
+				"lat": 40.0375,
+				"lon": 107.9131
+			}
+		},
+		{
+			"name": "Cedaredge",
+			"elevation": 6230,
+			"location": {
+				"lat": 38.9016,
+				"lon": 107.9265
+			}
+		},
+		{
+			"name": "Craig",
+			"elevation": 6198,
+			"location": {
+				"lat": 40.5152,
+				"lon": 107.5465
+			}
+		},
+		{
+			"name": "Carbondale",
+			"elevation": 6171,
+			"location": {
+				"lat": 39.4022,
+				"lon": 107.2112
+			}
+		},
+		{
+			"name": "Walsenburg",
+			"elevation": 6171,
+			"location": {
+				"lat": 37.6242,
+				"lon": 104.7803
+			}
+		},
+		{
+			"name": "Colorado Springs",
+			"elevation": 6010,
+			"location": {
+				"lat": 38.8339,
+				"lon": 104.8214
+			}
 		}
 	]
 }

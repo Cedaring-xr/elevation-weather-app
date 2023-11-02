@@ -5,12 +5,22 @@ type SliderProps = {
 	beforeImage: string
 	afterImage: string
 	elevation: string
-	handleDrag: (event: MouseEvent) => {}
+	sliderPosition: number
+	handleDrag: (e: React.MouseEvent<HTMLDivElement>) => void
+	handleMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void
+	handleMouseUp: (e: React.MouseEvent<HTMLDivElement>) => void
 }
 
-const ComparisonSlider: React.FC<SliderProps> = ({ beforeImage, afterImage, elevation, handleDrag }) => {
-	const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
-
+const ComparisonSlider: React.FC<SliderProps> = ({
+	beforeImage,
+	afterImage,
+	elevation,
+	sliderPosition,
+	handleDrag,
+	handleMouseDown,
+	handleMouseUp
+}) => {
+	// const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
 	// const [isDragging, setIsDragging] = useState(false)
 	// const [elevation, setElevation] = useState<string>('7,030')
 
@@ -31,13 +41,13 @@ const ComparisonSlider: React.FC<SliderProps> = ({ beforeImage, afterImage, elev
 	// 	setElevation(elevationRange)
 	// }
 
-	const handleMouseDown = () => {
-		setIsDragging(true)
-	}
+	// const handleMouseDown = () => {
+	// 	setIsDragging(true)
+	// }
 
-	const handleMouseUp = () => {
-		setIsDragging(false)
-	}
+	// const handleMouseUp = () => {
+	// 	setIsDragging(false)
+	// }
 
 	return (
 		<div id="slider-container" className="relative flex" onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>

@@ -21,6 +21,10 @@
 	.button {
 		@apply rounded-lg p-1 px-2 my-2 bg-zinc-800 text-neutral-100  w-[160px] sans-font;
 	}
+	.disabled-button {
+		@apply rounded-lg p-1 px-2 my-2 bg-zinc-500 text-white w-[160px] sans-font border-2 border-zinc-800;
+	}
+
 	.background {
 		background-image: url('assets/blandAbstractBackground2.png');
 		background-size: cover;

@@ -5,8 +5,9 @@ import ComparisonSlider from '../ComparisonSlider'
 import { GrFormClose } from 'react-icons/gr'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import list from '../../data/coloradoCities.json'
-import getFormattedWeatherData from '../../utils/weatherService'
 import CurrentWeather from '../CurrentWeather'
+import getFormattedWeatherData from '../../utils/weatherService'
+import { findClosestElevation } from '../../utils/weatherService'
 
 type TweatherData = {
 	timezone: string
@@ -29,17 +30,32 @@ type TweatherData = {
 	speed: any
 }
 
+type City = {
+	name: string
+	elevation: number
+	location: {
+		lat: number
+		lon: number
+	}
+}
+
 const SearchElevation = () => {
 	const [bannerVisible, setBannerVisible] = useState(true)
-	const [query, setQuery] = useState<{ q: string }>({ q: 'Denver' })
+	// const [query, setQuery] = useState<{ q: string }>({ q: 'Denver' })
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
-	const [currentWeather, setCurrentWeather] = useState(false)
+	const [currentLocationWeather, setCurrentLocationWeather] = useState(false)
+	const [showCitiesWeather, setShowCitiesWeather] = useState(false)
 
 	//state for child component
 	const [elevation, setElevation] = useState<string>('7,030')
+	const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
 	const [isDragging, setIsDragging] = useState(false)
+	const [weatherList, setWeatherList] = useState<TweatherData[]>([])
 
+	// const weatherList: any = []
+
+	// functions that are passed down to comparison slider
 	const handleDrag = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		if (!isDragging) return
 		const rect = e.currentTarget.getBoundingClientRect()
@@ -56,39 +72,42 @@ const SearchElevation = () => {
 		const elevationRange: string = Math.round(elevationPercent * 65.38 + 3619).toLocaleString() //low = Lamar(3619), hight = Leadville(10157)
 		setElevation(elevationRange)
 	}
+	const handleMouseDown = () => {
+		setIsDragging(true)
+	}
+	const handleMouseUp = () => {
+		setIsDragging(false)
+	}
 
-	const handleCurrentElevationSearch = () => {
+	// sorts elevation list and fetches weather
+	const handleElevationSearch = () => {
+		setWeatherList([]) //not working???
+		const elevationNumber = parseInt(elevation.replace(/,/g, '')) //remove comma and convert to number
+		// console.log('sorted list', findClosestElevation(list.cities, elevationNumber, 'elevation', 5))
+		const sortedList = findClosestElevation(list.cities, elevationNumber, 'elevation', 5)
+
+		sortedList.forEach((city: City) => {
+			console.log(city)
+			// console.log(city.name, city.elevation)
+			getFormattedWeatherData({ ...{ q: city.name }, units }).then((data) => {
+				setWeatherList([...weatherList, data])
+			})
+		})
+		setShowCitiesWeather(true)
+		console.log('weather list', weatherList)
+	}
+
+	const findCurrentElevation = () => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				console.log(position)
 				let lat = position.coords.latitude
 				let lon = position.coords.longitude
-				// need to ping the google maps api sending it lat and long coordinates
-				// api will return elevation
+				// need to ping the google maps api for elevation sending it lat and long coordinates
 				// display both the current elevation and the current weather from both APIs
-				setCurrentWeather(true)
+				setCurrentLocationWeather(true) //toglle section for displaying current location weather
 			})
 		}
-	}
-
-	const handleElevationSearch = () => {
-		// filter the list of all cities to only the closest 5 that match the given elevation
-
-		// need to get the search elevation from the child component
-
-		// ping weather api for each city and return current weather for each one
-		// display the city, elevation, and weather for each one
-
-		const fetchWeather = async () => {
-			const message = query ? query : 'current location'
-			console.log('query', message)
-			// toast.info('Fetching weather for' + message)
-			await getFormattedWeatherData({ ...query, units }).then((data) => {
-				setWeather(data)
-			})
-		}
-
-		// fetchWeather()
 	}
 
 	return (
@@ -115,7 +134,10 @@ const SearchElevation = () => {
 						beforeImage={isoMtn}
 						afterImage={isoMtn2}
 						elevation={elevation}
+						sliderPosition={sliderPosition}
 						handleDrag={handleDrag}
+						handleMouseDown={handleMouseDown}
+						handleMouseUp={handleMouseUp}
 					/>
 				</div>
 			</div>
@@ -123,23 +145,25 @@ const SearchElevation = () => {
 				<button className="button flex flex-row justify-center text-xl mr-1" onClick={handleElevationSearch}>
 					Search <BiSearchAlt2 className="text-xl text-white m-1 mx-2 transition ease-out hover:scale-110" />
 				</button>
-				<button className="button w-[200px]" onClick={handleCurrentElevationSearch}>
+				<button className="disabled-button w-[200px]" onClick={findCurrentElevation} disabled>
 					Find Current Elevation
 				</button>
 			</div>
-			{currentWeather && <CurrentWeather weather={weather} />}
+			{currentLocationWeather && <CurrentWeather weather={weather} />}
 			<div className="text-white m-4">
-				<h3 className="my-2 text-xl">Cities that match the given elevation</h3>
+				<h3 className="my-2 text-xl">Cities similar the selected elevation</h3>
 				<hr />
-				<table className="h-[400px]">
-					<tbody>
-						{list.cities.map((city) => (
-							<tr key={city.name}>
-								<td>{city.name}</td>
-							</tr>
+				{showCitiesWeather && (
+					<div>
+						<span>List of cities</span>
+						{weatherList.map((city: TweatherData) => (
+							<div key={city.name}>
+								<span>{city.name}</span>
+								<span>{city.temp}</span>
+							</div>
 						))}
-					</tbody>
-				</table>
+					</div>
+				)}
 			</div>
 		</div>
 	)

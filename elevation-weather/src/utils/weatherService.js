@@ -98,5 +98,12 @@ const getFormattedWeatherData = async (searchParams) => {
 	return { ...formattedCurrentWeather, ...formattedForecastWeather }
 }
 
+const findClosestElevation = (array, userInput, propertyName, amount) => {
+	const sortedList = array.sort(
+		(a, b) => Math.abs(a[propertyName] - userInput) - Math.abs(b[propertyName] - userInput)
+	)
+	return sortedList.slice(0, amount)
+}
+
 export default getFormattedWeatherData
-export { formatToTime, formatToLocalTime, iconsUrlFromCode }
+export { formatToTime, formatToLocalTime, iconsUrlFromCode, findClosestElevation }
