@@ -101,8 +101,13 @@ const SearchLocation = () => {
 	useEffect(() => {
 		const fetchWeather = async () => {
 			const message = query ? query : 'current location'
-			console.log('query', message)
-			toast.info('Fetching weather for' + message)
+			if ('q' in query) {
+				toast.info('Fetching weather for ' + query.q)
+			} else if ('lat' in query) {
+				toast.info('Fetching weather for ' + query.lat + ' ' + query.lon)
+			} else {
+				toast.info('Fetching weather info for current location')
+			}
 			await getFormattedWeatherData({ ...query, units }).then((data) => {
 				setWeather(data)
 			})
