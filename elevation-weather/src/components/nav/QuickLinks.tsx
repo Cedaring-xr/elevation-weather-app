@@ -8,9 +8,9 @@ import React from 'react'
 // }
 
 const citiesList = [
-	{ id: 1, name: 'London' },
+	{ id: 1, name: 'Paris' },
 	{ id: 2, name: 'Tokyo' },
-	{ id: 3, name: 'New York' },
+	{ id: 3, name: 'Los Angeles' },
 	{ id: 4, name: 'Denver' }
 ]
 

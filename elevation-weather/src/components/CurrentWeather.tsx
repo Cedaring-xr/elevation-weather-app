@@ -18,9 +18,9 @@ const CurrentWeather = ({
 						<img src={iconsUrlFromCode(icon)} alt="" />
 						<p className="flex flex-col space-y-2 text-4xl">{temp.toFixed()}&deg;</p>
 						<div className="flex flex-col space-y-1 md:space-y-2">
-							<p className="inner-details">humidity: {humidity}%</p>
-							<p className="inner-details">wind: {speed.toFixed()} km/h</p>
-							<p className="inner-details">feels like: {feels_like.toFixed()}&deg;</p>
+							<p>humidity: {humidity}%</p>
+							<p>wind: {speed.toFixed()} km/h</p>
+							<p>feels like: {feels_like.toFixed()}&deg;</p>
 						</div>
 					</div>
 					<div className="flex flex-row items-center justify-center space-x-2 text-white py-3">

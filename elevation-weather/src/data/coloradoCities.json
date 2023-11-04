@@ -65,14 +65,6 @@
 			}
 		},
 		{
-			"name": "Keystone",
-			"elevation": 9173,
-			"location": {
-				"lat": 39.5994,
-				"lon": 105.9872
-			}
-		},
-		{
 			"name": "Silver Plume",
 			"elevation": 9101,
 			"location": {
@@ -326,14 +318,6 @@
 			"location": {
 				"lat": 38.1305,
 				"lon": 108.2923
-			}
-		},
-		{
-			"name": "Dolores",
-			"elevation": 6936,
-			"location": {
-				"lat": 37.4739,
-				"lon": 108.5045
 			}
 		},
 		{
