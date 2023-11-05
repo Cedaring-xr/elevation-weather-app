@@ -9,6 +9,8 @@ type SliderProps = {
 	handleDrag: (e: React.MouseEvent<HTMLDivElement>) => void
 	handleMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void
 	handleMouseUp: (e: React.MouseEvent<HTMLDivElement>) => void
+	handleTouchStart: (e: React.TouchEvent<HTMLDivElement>) => void
+	handleTouchEnd: (e: React.TouchEvent<HTMLDivElement>) => void
 }
 
 const ComparisonSlider: React.FC<SliderProps> = ({
@@ -18,44 +20,25 @@ const ComparisonSlider: React.FC<SliderProps> = ({
 	sliderPosition,
 	handleDrag,
 	handleMouseDown,
-	handleMouseUp
+	handleMouseUp,
+	handleTouchStart,
+	handleTouchEnd
 }) => {
-	// const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
-	// const [isDragging, setIsDragging] = useState(false)
-	// const [elevation, setElevation] = useState<string>('7,030')
-
-	// const handleDrag = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-	// 	if (!isDragging) return
-	// 	const rect = e.currentTarget.getBoundingClientRect()
-	// 	const y = Math.max(0, Math.min(e.clientY - rect.top, rect.height))
-	// 	const percent: number = Math.max(0, Math.min((y / rect.height) * 100, 100))
-	// 	if (percent < 2) {
-	// 		setSliderPosition(2)
-	// 	} else if (percent > 98) {
-	// 		setSliderPosition(98)
-	// 	} else {
-	// 		setSliderPosition(percent)
-	// 	}
-	// 	const elevationPercent = 100 - percent
-	// 	const elevationRange: string = Math.round(elevationPercent * 65.38 + 3619).toLocaleString() //low = Lamar(3619), hight = Leadville(10157)
-	// 	setElevation(elevationRange)
-	// }
-
-	// const handleMouseDown = () => {
-	// 	setIsDragging(true)
-	// }
-
-	// const handleMouseUp = () => {
-	// 	setIsDragging(false)
-	// }
-
 	return (
-		<div id="slider-container" className="relative flex" onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
+		<div
+			id="slider-container"
+			className="relative flex"
+			onMouseUp={handleMouseUp}
+			onMouseLeave={handleMouseUp}
+			onTouchEnd={handleTouchEnd}
+		>
 			<div
 				id="image-container"
 				className="relative w-5/6 m-auto overflow-hidden border-4 border-slate-900"
 				onMouseDown={handleMouseDown}
+				onTouchStart={handleTouchStart}
 				onMouseMove={handleDrag}
+				// onTouchMove={handleDrag}
 			>
 				<img id="before-image" src={beforeImage} alt="black and white version of mountain slider image" />
 				<div className="absolute w-full top-0" style={{ clipPath: `inset(0 0 ${100 - sliderPosition}%  0)` }}>

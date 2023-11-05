@@ -82,6 +82,12 @@ const SearchElevation = () => {
 	const handleMouseUp = () => {
 		setIsDragging(false)
 	}
+	const handleTouchStart = () => {
+		setIsDragging(true)
+	}
+	const handleTouchEnd = () => {
+		setIsDragging(false)
+	}
 
 	// sorts elevation list and fetches weather
 	const handleElevationSearch = () => {
@@ -146,6 +152,8 @@ const SearchElevation = () => {
 						handleDrag={handleDrag}
 						handleMouseDown={handleMouseDown}
 						handleMouseUp={handleMouseUp}
+						handleTouchStart={handleTouchStart}
+						handleTouchEnd={handleTouchEnd}
 					/>
 				</div>
 			</div>

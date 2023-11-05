@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-elevationweather-dev-135605-authRole",
+      "UnauthRoleArn": "arn:aws:iam::751841649472:role/amplify-elevationweather-dev-135605-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::751841649472:role/amplify-elevationweather-dev-135605-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-elevationweather-dev-135605-deployment",
+      "UnauthRoleName": "amplify-elevationweather-dev-135605-unauthRole",
+      "StackName": "amplify-elevationweather-dev-135605",
+      "StackId": "arn:aws:cloudformation:us-east-2:751841649472:stack/amplify-elevationweather-dev-135605/316c82f0-7b4c-11ee-8330-02b04b716785",
+      "AmplifyAppId": "dr7t8my3rq95b"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dr7t8my3rq95b",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}
