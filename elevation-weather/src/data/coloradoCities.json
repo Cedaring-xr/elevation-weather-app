@@ -25,14 +25,6 @@
 			}
 		},
 		{
-			"name": "Ophir",
-			"elevation": 9695,
-			"location": {
-				"lat": 37.8569,
-				"lon": 107.8326
-			}
-		},
-		{
 			"name": "Mountain Village",
 			"elevation": 9600,
 			"location": {
@@ -422,6 +414,382 @@
 			"location": {
 				"lat": 38.8339,
 				"lon": 104.8214
+			}
+		},
+		{
+			"name": "Dinosaur",
+			"elevation": 5922,
+			"location": {
+				"lat": 40.2436,
+				"lon": 109.0146
+			}
+		},
+		{
+			"name": "Parker",
+			"elevation": 5869,
+			"location": {
+				"lat": 39.5186,
+				"lon": 104.7614
+			}
+		},
+		{
+			"name": "Centennial",
+			"elevation": 5837,
+			"location": {
+				"lat": 39.5792,
+				"lon": 104.8769
+			}
+		},
+		{
+			"name": "Montrose",
+			"elevation": 5807,
+			"location": {
+				"lat": 38.4783,
+				"lon": 107.8762
+			}
+		},
+		{
+			"name": "Nucla",
+			"elevation": 5787,
+			"location": {
+				"lat": 38.2694,
+				"lon": 108.5479
+			}
+		},
+		{
+			"name": "Glenwood Springs",
+			"elevation": 5761,
+			"location": {
+				"lat": 39.5505,
+				"lon": 107.3248
+			}
+		},
+		{
+			"name": "Golden",
+			"elevation": 5673,
+			"location": {
+				"lat": 39.7555,
+				"lon": 105.2211
+			}
+		},
+		{
+			"name": "Lakewood",
+			"elevation": 5518,
+			"location": {
+				"lat": 39.7047,
+				"lon": 105.0814
+			}
+		},
+		{
+			"name": "Superior",
+			"elevation": 5499,
+			"location": {
+				"lat": 39.9528,
+				"lon": 105.1686
+			}
+		},
+		{
+			"name": "Greenwood Village",
+			"elevation": 5469,
+			"location": {
+				"lat": 39.6172,
+				"lon": 104.9508
+			}
+		},
+		{
+			"name": "Wheat Ridge",
+			"elevation": 5459,
+			"location": {
+				"lat": 39.7661,
+				"lon": 105.0772
+			}
+		},
+		{
+			"name": "Naturita",
+			"elevation": 5423,
+			"location": {
+				"lat": 38.2183,
+				"lon": 108.5687
+			}
+		},
+		{
+			"name": "Aurora",
+			"elevation": 5404,
+			"location": {
+				"lat": 39.7294,
+				"lon": 104.8319
+			}
+		},
+		{
+			"name": "Broomfield",
+			"elevation": 5390,
+			"location": {
+				"lat": 39.9205,
+				"lon": 105.0867
+			}
+		},
+		{
+			"name": "Westminster",
+			"elevation": 5381,
+			"location": {
+				"lat": 39.8367,
+				"lon": 105.0372
+			}
+		},
+		{
+			"name": "Englewood",
+			"elevation": 5371,
+			"location": {
+				"lat": 39.6478,
+				"lon": 104.9878
+			}
+		},
+		{
+			"name": "Lyons",
+			"elevation": 5364,
+			"location": {
+				"lat": 40.2247,
+				"lon": 105.2714
+			}
+		},
+		{
+			"name": "Olathe",
+			"elevation": 5358,
+			"location": {
+				"lat": 38.605,
+				"lon": 107.9823
+			}
+		},
+		{
+			"name": "Littleton",
+			"elevation": 5351,
+			"location": {
+				"lat": 39.6133,
+				"lon": 105.0166
+			}
+		},
+		{
+			"name": "Rifle",
+			"elevation": 5348,
+			"location": {
+				"lat": 39.5347,
+				"lon": 107.7831
+			}
+		},
+		{
+			"name": "Louisville",
+			"elevation": 5338,
+			"location": {
+				"lat": 39.9778,
+				"lon": 105.1319
+			}
+		},
+		{
+			"name": "Boulder",
+			"elevation": 5318,
+			"location": {
+				"lat": 40.015,
+				"lon": 105.2705
+			}
+		},
+		{
+			"name": "Denver",
+			"elevation": 5280,
+			"location": {
+				"lat": 39.7392,
+				"lon": 104.9849
+			}
+		},
+		{
+			"name": "Rangely",
+			"elevation": 5233,
+			"location": {
+				"lat": 40.0875,
+				"lon": 108.8048
+			}
+		},
+		{
+			"name": "Lafayette",
+			"elevation": 5210,
+			"location": {
+				"lat": 39.9936,
+				"lon": 105.0897
+			}
+		},
+		{
+			"name": "Parachute",
+			"elevation": 5092,
+			"location": {
+				"lat": 39.4519,
+				"lon": 108.0529
+			}
+		},
+		{
+			"name": "Berthoud",
+			"elevation": 5033,
+			"location": {
+				"lat": 40.3083,
+				"lon": 105.0811
+			}
+		},
+		{
+			"name": "Erie",
+			"elevation": 5026,
+			"location": {
+				"lat": 40.0503,
+				"lon": 105.05
+			}
+		},
+		{
+			"name": "Fort Collins",
+			"elevation": 5003,
+			"location": {
+				"lat": 40.5853,
+				"lon": 105.0844
+			}
+		},
+		{
+			"name": "Loveland",
+			"elevation": 4987,
+			"location": {
+				"lat": 40.3978,
+				"lon": 105.075
+			}
+		},
+		{
+			"name": "Longmont",
+			"elevation": 4980,
+			"location": {
+				"lat": 40.1672,
+				"lon": 105.1019
+			}
+		},
+		{
+			"name": "Delta",
+			"elevation": 4961,
+			"location": {
+				"lat": 38.7422,
+				"lon": 108.069
+			}
+		},
+		{
+			"name": "Fort Lupton",
+			"elevation": 4905,
+			"location": {
+				"lat": 40.0847,
+				"lon": 104.813
+			}
+		},
+		{
+			"name": "Windsor",
+			"elevation": 4797,
+			"location": {
+				"lat": 40.4775,
+				"lon": 104.9014
+			}
+		},
+		{
+			"name": "Palisade",
+			"elevation": 4728,
+			"location": {
+				"lat": 39.1103,
+				"lon": 108.3509
+			}
+		},
+		{
+			"name": "Pueblo",
+			"elevation": 4692,
+			"location": {
+				"lat": 38.2544,
+				"lon": 104.6091
+			}
+		},
+		{
+			"name": "Greeley",
+			"elevation": 4675,
+			"location": {
+				"lat": 40.4233,
+				"lon": 104.7091
+			}
+		},
+		{
+			"name": "Grand Junction",
+			"elevation": 4590,
+			"location": {
+				"lat": 39.0639,
+				"lon": 108.5506
+			}
+		},
+		{
+			"name": "Fruita",
+			"elevation": 4511,
+			"location": {
+				"lat": 39.1589,
+				"lon": 108.729
+			}
+		},
+		{
+			"name": "Fort Morgan",
+			"elevation": 4327,
+			"location": {
+				"lat": 40.2503,
+				"lon": 103.8
+			}
+		},
+		{
+			"name": "Cheyenne Wells",
+			"elevation": 4291,
+			"location": {
+				"lat": 38.8214,
+				"lon": 102.3532
+			}
+		},
+		{
+			"name": "Kit carson",
+			"elevation": 4285,
+			"location": {
+				"lat": 38.7611,
+				"lon": 102.7894
+			}
+		},
+		{
+			"name": "La Junta",
+			"elevation": 4078,
+			"location": {
+				"lat": 37.985,
+				"lon": 103.5438
+			}
+		},
+		{
+			"name": "Sterling",
+			"elevation": 3937,
+			"location": {
+				"lat": 40.6255,
+				"lon": 103.2077
+			}
+		},
+		{
+			"name": "Las Animas",
+			"elevation": 3898,
+			"location": {
+				"lat": 38.0667,
+				"lon": 103.2227
+			}
+		},
+		{
+			"name": "Lamar",
+			"elevation": 3619,
+			"location": {
+				"lat": 38.0872,
+				"lon": 102.6207
+			}
+		},
+		{
+			"name": "Sedgwick",
+			"elevation": 3586,
+			"location": {
+				"lat": 40.9364,
+				"lon": 102.5255
 			}
 		}
 	]
