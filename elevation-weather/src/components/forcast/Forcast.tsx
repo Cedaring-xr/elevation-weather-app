@@ -1,5 +1,4 @@
 import React from 'react'
-import { TiWeatherShower } from 'react-icons/ti'
 import { iconsUrlFromCode } from '../../utils/weatherService'
 
 type ForcastProps = {
@@ -20,7 +19,7 @@ const Forcast: React.FC<ForcastProps> = ({ title, items }: any) => {
 							<div key={item.title}>
 								<div className="flex flex-col items-center justify-center">
 									<p>{item.title}</p>
-									<img src={iconsUrlFromCode(item.icon)} />
+									<img src={iconsUrlFromCode(item.icon)} alt="icon" />
 									<p>{item.temp.toFixed()}&deg;</p>
 								</div>
 								<div className=""></div>

@@ -40,9 +40,9 @@ const ComparisonSlider: React.FC<SliderProps> = ({
 				onMouseMove={handleDrag}
 				// onTouchMove={handleDrag}
 			>
-				<img id="before-image" src={beforeImage} alt="black and white version of mountain slider image" />
+				<img id="before-image" src={beforeImage} alt="black and white version of mountain slider" />
 				<div className="absolute w-full top-0" style={{ clipPath: `inset(0 0 ${100 - sliderPosition}%  0)` }}>
-					<img id="after-image" src={afterImage} alt="color version of mountain slider image" />
+					<img id="after-image" src={afterImage} alt="color version of mountain slider" />
 				</div>
 				<div
 					className="absolute top-0 h-1 w-full bg-white cursor-pointer"

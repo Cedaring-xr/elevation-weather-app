@@ -6,6 +6,7 @@ const Header = () => {
 			<img
 				className="w-screen min-h-[200px] xl:max-w-[1800px] max-h-[220px] mx-auto"
 				src="/assets/images/headerBackground.gif"
+				alt="mist tree background"
 			/>
 			<div className="absolute top-0 bg-slate-800 py-3 px-4 md:px-12 lg:px-24 lg:ml-[28%] rounded-md m-2 opacity-80">
 				<h1 className="font-bold text-4xl text-neutral-50 sans-font">Elevation Weather App</h1>

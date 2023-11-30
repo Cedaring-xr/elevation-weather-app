@@ -1,15 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Header from './components/Header'
 import SlideSelect from './components/SlideSelect'
 import Footer from './components/Footer'
 import Modal from './components/Modal'
 
 function App() {
+	const [showModal, setShowModal] = useState(false)
+
+	const handleModalopen = () => {
+		setShowModal(true)
+	}
+
+	const handleModalClose = () => {
+		setShowModal(false)
+	}
+
 	return (
 		<div className="background relative flex justify-center h-[1550px] md:h-[1300px]">
 			<Header />
 			<SlideSelect />
-			<Footer />
+			{showModal && <Modal message="Future features that I plan on adding" closeModal={handleModalClose} />}
+			<Footer modal={handleModalopen} />
 		</div>
 	)
 }
