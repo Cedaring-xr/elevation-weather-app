@@ -8,27 +8,7 @@ import Forcast from '../forcast/Forcast'
 import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
-type TweatherData = {
-	timezone: string
-	daily: any[]
-	hourly: any[]
-	lat: number
-	lon: number
-	temp: any
-	feels_like: any
-	temp_min: any
-	temp_max: any
-	humidity: any
-	name: any
-	dt: any
-	country: any
-	sunrise: any
-	sunset: any
-	details: any
-	icon: any
-	speed: any
-}
+import { TweatherData } from '../../userTypes'
 
 const SearchLocation = () => {
 	const [query, setQuery] = useState<{ q: string } | { lat: number; lon: number }>({ q: 'Denver' })
@@ -44,7 +24,7 @@ const SearchLocation = () => {
 
 	const formatBackground = () => {
 		if (!weather) return 'from-cyan-700 to blue-700'
-		const threshold = units === 'metric' ? 20 : 60
+		// const threshold = units === 'metric' ? 20 : 60
 		//todo: normalize weather.temp for both celcius and farenheit
 		const thresholdValue = Math.round(weather.temp / 10)
 		switch (thresholdValue) {
@@ -80,7 +60,6 @@ const SearchLocation = () => {
 			navigator.geolocation.getCurrentPosition((position) => {
 				let lat = position.coords.latitude
 				let lon = position.coords.longitude
-
 				setQuery({ lat, lon })
 			})
 		} else {
@@ -88,19 +67,18 @@ const SearchLocation = () => {
 		}
 	}
 
-	const handleSearch = (e: any) => {
+	const handleSearch = (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 		setQuery({ q: city })
 	}
 
-	const handleUnitsChange = (e: any) => {
+	const handleUnitsChange = (e: { currentTarget: { name: string } }) => {
 		const selectedUnit = e.currentTarget.name
 		if (units !== selectedUnit) setUnits(selectedUnit)
 	}
 
 	useEffect(() => {
 		const fetchWeather = async () => {
-			const message = query ? query : 'current location'
 			if ('q' in query) {
 				toast.info('Fetching weather for ' + query.q)
 			} else if ('lat' in query) {
@@ -122,7 +100,7 @@ const SearchLocation = () => {
 			className={` bg-gradient-to-br ${formatBackground()} h-fit md:px-12 lg:px-32 pt-8 pb-12 px-4 shadow-xl shadow-gray-400`}
 		>
 			<div>
-				<QuickLinks setQuery={setQuery} />
+				<QuickLinks query={query} setQuery={setQuery} />
 				<div className="flex justify-center mt-8">
 					<button className="button" onClick={handleLocationClick}>
 						Local Weather

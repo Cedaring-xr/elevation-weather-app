@@ -1,11 +1,9 @@
 import React from 'react'
 
-// type LinkProps = {
-// 	cities: {
-// 		id: number
-// 		name: string
-// 	}[]
-// }
+type LinkProps = {
+	query: { q: string } | { lat: number; lon: number }
+	setQuery: React.Dispatch<React.SetStateAction<{ q: string } | { lat: number; lon: number }>>
+}
 
 const citiesList = [
 	{ id: 1, name: 'Paris' },
@@ -14,7 +12,7 @@ const citiesList = [
 	{ id: 4, name: 'Denver' }
 ]
 
-const QuickLinks = ({ setQuery }: any) => {
+const QuickLinks: React.FC<LinkProps> = ({ setQuery }) => {
 	const cities = citiesList
 	return (
 		<div className="flex flex-row justify-around items-center m-1 lg:m-4 px-2 md:px-8 bg-neutral-100 rounded-lg text-sm md:text-base">

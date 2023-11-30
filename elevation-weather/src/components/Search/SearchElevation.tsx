@@ -9,43 +9,11 @@ import CurrentWeather from '../CurrentWeather'
 import getFormattedWeatherData from '../../utils/weatherService'
 import { findClosestElevation } from '../../utils/weatherService'
 import { BsThermometerSnow, BsThermometerSun, BsWind, BsDropletHalf } from 'react-icons/bs'
-import { formatToTime } from '../../utils/weatherService'
 import { iconsUrlFromCode } from '../../utils/weatherService'
-
-type TweatherData = {
-	timezone: string
-	elevation?: number
-	daily: any[]
-	hourly: any[]
-	lat: number
-	lon: number
-	temp: any
-	feels_like: any
-	temp_min: any
-	temp_max: any
-	humidity: any
-	name: any
-	dt: any
-	country: any
-	sunrise: any
-	sunset: any
-	details: any
-	icon: any
-	speed: any
-}
-
-type City = {
-	name: string
-	elevation: number
-	location: {
-		lat: number
-		lon: number
-	}
-}
+import { TweatherData, City } from '../../userTypes'
 
 const SearchElevation = () => {
 	const [bannerVisible, setBannerVisible] = useState(true)
-	// const [query, setQuery] = useState<{ q: string }>({ q: 'Denver' })
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
 	const [currentLocationWeather, setCurrentLocationWeather] = useState(false)
@@ -55,9 +23,7 @@ const SearchElevation = () => {
 	const [elevation, setElevation] = useState<string>('7,030')
 	const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
 	const [isDragging, setIsDragging] = useState(false)
-	const [weatherList, setWeatherList] = useState<any>([])
-
-	// const weatherList: any = []
+	const [weatherList, setWeatherList] = useState<TweatherData[] | null>([])
 
 	// functions that are passed down to comparison slider
 	const handleDrag = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -93,7 +59,6 @@ const SearchElevation = () => {
 	const handleElevationSearch = () => {
 		setWeatherList([])
 		const elevationNumber = parseInt(elevation.replace(/,/g, '')) //remove comma and convert to number
-		// console.log('sorted list', findClosestElevation(list.cities, elevationNumber, 'elevation', 5))
 		const sortedList = findClosestElevation(list.cities, elevationNumber, 'elevation', 5)
 
 		const cityList: TweatherData[] = []
@@ -122,6 +87,7 @@ const SearchElevation = () => {
 		}
 	}
 
+	//update the render when data is fetched
 	// useEffect(() => {}, [weatherList])
 
 	return (
@@ -171,36 +137,37 @@ const SearchElevation = () => {
 				<hr />
 				{showCitiesWeather && (
 					<div>
-						{weatherList.map((city: TweatherData) => (
-							<div key={city.lat}>
-								<div className="flex flex-row justify-between items-center text-white w-2/3 md:w-1/2 mx-auto">
-									<span className="text-2xl">{city.name}</span>
-									<img src={iconsUrlFromCode(city.icon)} alt="" />
-									<p className="flex flex-col text-3xl">{city.temp.toFixed()}&deg;</p>
+						{weatherList &&
+							weatherList.map((city: TweatherData) => (
+								<div key={city.lat}>
+									<div className="flex flex-row justify-between items-center text-white w-2/3 md:w-1/2 mx-auto">
+										<span className="text-2xl">{city.name}</span>
+										<img src={iconsUrlFromCode(city.icon)} alt="" />
+										<p className="flex flex-col text-3xl">{city.temp.toFixed()}&deg;</p>
+									</div>
+									<div className="flex flex-row items-center justify-center space-x-2 text-white py-1">
+										<p className="text-sm flex">
+											<BsDropletHalf className="text-sm flex" />
+											humidity: {city.humidity}%
+										</p>
+										<span className="text-xl text-neutral-100 font-light mb-1">|</span>
+										<p className="text-sm flex">
+											<BsWind className="text-xl mr-1" />
+											wind: {city.speed.toFixed()} km/h
+										</p>
+										<span className="text-xl text-neutral-100 font-light mb-1">|</span>
+										<p className="text-sm flex">
+											<BsThermometerSnow className="text-xl mr-1" />
+											Low: {city.temp_min.toFixed()}&deg;
+										</p>
+										<span className="text-xl text-neutral-100 font-light mb-1">|</span>
+										<p className="text-sm flex">
+											<BsThermometerSun className="text-xl mr-1" />
+											High: {city.temp_max.toFixed()}&deg;
+										</p>
+									</div>
 								</div>
-								<div className="flex flex-row items-center justify-center space-x-2 text-white py-1">
-									<p className="text-sm flex">
-										<BsDropletHalf className="text-sm flex" />
-										humidity: {city.humidity}%
-									</p>
-									<span className="text-xl text-neutral-100 font-light mb-1">|</span>
-									<p className="text-sm flex">
-										<BsWind className="text-xl mr-1" />
-										wind: {city.speed.toFixed()} km/h
-									</p>
-									<span className="text-xl text-neutral-100 font-light mb-1">|</span>
-									<p className="text-sm flex">
-										<BsThermometerSnow className="text-xl mr-1" />
-										Low: {city.temp_min.toFixed()}&deg;
-									</p>
-									<span className="text-xl text-neutral-100 font-light mb-1">|</span>
-									<p className="text-sm flex">
-										<BsThermometerSun className="text-xl mr-1" />
-										High: {city.temp_max.toFixed()}&deg;
-									</p>
-								</div>
-							</div>
-						))}
+							))}
 					</div>
 				)}
 			</div>
