@@ -1,24 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import isoMtn from '../../assets/iso-mtn-color.png'
 import isoMtn2 from '../../assets/iso-mtn-bw.png'
-import ComparisonSlider from '../ComparisonSlider'
-import { GrFormClose } from 'react-icons/gr'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import list from '../../data/coloradoCities.json'
-import CurrentWeather from '../CurrentWeather'
 import getFormattedWeatherData from '../../utils/weatherService'
 import { findClosestElevation } from '../../utils/weatherService'
-import { BsThermometerSnow, BsThermometerSun, BsWind, BsDropletHalf } from 'react-icons/bs'
-import { iconsUrlFromCode } from '../../utils/weatherService'
+import ComparisonSlider from '../ComparisonSlider'
 import { TweatherData, City } from '../../userTypes'
+import Banner from './Banner'
+import WeatherCity from './WeatherCity'
 
 const SearchElevation = () => {
-	const [bannerVisible, setBannerVisible] = useState(true)
 	const [units, setUnits] = useState('Imperial')
-	const [weather, setWeather] = useState<TweatherData | null>(null)
-	const [currentLocationWeather, setCurrentLocationWeather] = useState(false)
-	const [showCitiesWeather, setShowCitiesWeather] = useState(false)
-
 	//state for child component
 	const [elevation, setElevation] = useState<string>('7,030')
 	const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
@@ -56,12 +49,12 @@ const SearchElevation = () => {
 	}
 
 	// sorts elevation list and fetches weather
-	const handleElevationSearch = () => {
-		setWeatherList([])
+	const handleElevationSearch = async () => {
+		const cityList: TweatherData[] = []
+
+		// get list of cities to search for
 		const elevationNumber = parseInt(elevation.replace(/,/g, '')) //remove comma and convert to number
 		const sortedList = findClosestElevation(list.cities, elevationNumber, 'elevation', 5)
-
-		const cityList: TweatherData[] = []
 
 		sortedList.forEach((city: City) => {
 			console.log(city)
@@ -69,39 +62,18 @@ const SearchElevation = () => {
 				cityList.push(data)
 			})
 		})
-		setWeatherList(cityList) // this isn't working right, shows the previous values of the state
-		setShowCitiesWeather(true)
-		console.log('weather list', weatherList)
+		setWeatherList(cityList)
 	}
-
-	const findCurrentElevation = () => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition((position) => {
-				console.log(position)
-				let lat = position.coords.latitude
-				let lon = position.coords.longitude
-				// need to ping the google maps api for elevation sending it lat and long coordinates
-				// display both the current elevation and the current weather from both APIs
-				setCurrentLocationWeather(true) //toglle section for displaying current location weather
-			})
-		}
-	}
-
-	//update the render when data is fetched
-	// useEffect(() => {}, [weatherList])
 
 	return (
 		<div className="bg-gradient-to-br from-cyan-600 to-sky-800 h-fit md:px-12 lg:px-32 py-8 md:py-12 shadow-xl shadow-gray-400 flex flex-col">
 			<h3 className="m-1 lg:m-4 px-4 md:px-8 py-1 bg-neutral-100 rounded-lg md:text-xl sans-font text-center uppercase font-bold text-stone-800 max-w-[500px] self-center">
 				Search Weather by Elevation
 			</h3>
-			{bannerVisible && (
-				<div className="bg-fuchsia-800 text-white my-4 p-2 pt-4 md:p-4 border-2 border-black relative">
-					<GrFormClose className="absolute top-0 right-0 text-2xl" onClick={() => setBannerVisible(false)} />
-					This is a test placeholder feature for getting weather based on a given elevation height. Currently
-					I am limiting the search to cities whithin Colorado because it has a wide range of elevations.
-				</div>
-			)}
+			<Banner
+				message="This is a test placeholder feature for getting weather based on a given elevation height. Currently
+					I am limiting the search to cities whithin Colorado because it has a wide range of elevations."
+			/>
 			<span className="sans-font text-white text-center m-4 text-3xl">
 				Locations in Colorado <hr />
 			</span>
@@ -127,48 +99,21 @@ const SearchElevation = () => {
 				<button className="button flex flex-row justify-center text-xl mr-1" onClick={handleElevationSearch}>
 					Search <BiSearchAlt2 className="text-xl text-white m-1 mx-2 transition ease-out hover:scale-110" />
 				</button>
-				<button className="disabled-button w-[200px]" onClick={findCurrentElevation} disabled>
+				<button className="disabled-button w-[200px]" disabled>
 					Find Current Elevation
 				</button>
 			</div>
-			{currentLocationWeather && <CurrentWeather weather={weather} />}
 			<div className="text-white m-4">
 				<h3 className="my-2 text-xl">Cities close to the selected elevation</h3>
 				<hr />
-				{showCitiesWeather && (
+				{weatherList && weatherList.length > 1 ? (
 					<div>
-						{weatherList &&
-							weatherList.map((city: TweatherData) => (
-								<div key={city.lat}>
-									<div className="flex flex-row justify-between items-center text-white w-2/3 md:w-1/2 mx-auto">
-										<span className="text-2xl">{city.name}</span>
-										<img src={iconsUrlFromCode(city.icon)} alt="" />
-										<p className="flex flex-col text-3xl">{city.temp.toFixed()}&deg;</p>
-									</div>
-									<div className="flex flex-row items-center justify-center space-x-2 text-white py-1">
-										<p className="text-sm flex">
-											<BsDropletHalf className="text-sm flex" />
-											humidity: {city.humidity}%
-										</p>
-										<span className="text-xl text-neutral-100 font-light mb-1">|</span>
-										<p className="text-sm flex">
-											<BsWind className="text-xl mr-1" />
-											wind: {city.speed.toFixed()} km/h
-										</p>
-										<span className="text-xl text-neutral-100 font-light mb-1">|</span>
-										<p className="text-sm flex">
-											<BsThermometerSnow className="text-xl mr-1" />
-											Low: {city.temp_min.toFixed()}&deg;
-										</p>
-										<span className="text-xl text-neutral-100 font-light mb-1">|</span>
-										<p className="text-sm flex">
-											<BsThermometerSun className="text-xl mr-1" />
-											High: {city.temp_max.toFixed()}&deg;
-										</p>
-									</div>
-								</div>
-							))}
+						{weatherList.map((city: TweatherData) => (
+							<WeatherCity key={city.lat} city={city} />
+						))}
 					</div>
+				) : (
+					''
 				)}
 			</div>
 		</div>

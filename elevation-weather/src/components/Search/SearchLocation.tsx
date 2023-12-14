@@ -88,6 +88,7 @@ const SearchLocation = () => {
 			}
 			await getFormattedWeatherData({ ...query, units }).then((data) => {
 				setWeather(data)
+				console.log(weather)
 			})
 		}
 

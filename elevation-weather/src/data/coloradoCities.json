@@ -193,14 +193,6 @@
 			}
 		},
 		{
-			"name": "Crestone",
-			"elevation": 7930,
-			"location": {
-				"lat": 37.9964,
-				"lon": 105.6997
-			}
-		},
-		{
 			"name": "Aspen",
 			"elevation": 7890,
 			"location": {
@@ -502,14 +494,6 @@
 			"location": {
 				"lat": 39.7661,
 				"lon": 105.0772
-			}
-		},
-		{
-			"name": "Naturita",
-			"elevation": 5423,
-			"location": {
-				"lat": 38.2183,
-				"lon": 108.5687
 			}
 		},
 		{
