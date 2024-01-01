@@ -20,6 +20,3 @@ const addCitiesToJSON = (cities, filename) => {
 }
 
 const jsonFileName = '../data/coloradoCities.json'
-
-// run the function to add cities list
-addCitiesToJSON(citiesToAdd, jsonFileName)

@@ -409,14 +409,6 @@
 			}
 		},
 		{
-			"name": "Dinosaur",
-			"elevation": 5922,
-			"location": {
-				"lat": 40.2436,
-				"lon": 109.0146
-			}
-		},
-		{
 			"name": "Parker",
 			"elevation": 5869,
 			"location": {

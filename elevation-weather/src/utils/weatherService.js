@@ -74,7 +74,7 @@ const getWeatherData = async (infoType, searchParams) => {
 	try {
 		const response = await fetch(url)
 		if (!response.ok) {
-			throw new Error('Error with network response')
+			throw new Error('Error with weather response')
 		}
 		const data = await response.json()
 		return data

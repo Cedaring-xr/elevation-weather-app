@@ -7,7 +7,7 @@ import Modal from './components/Modal'
 function App() {
 	const [showModal, setShowModal] = useState(false)
 
-	const handleModalopen = () => {
+	const handleModalOpen = () => {
 		setShowModal(true)
 	}
 
@@ -20,7 +20,7 @@ function App() {
 			<Header />
 			<SlideSelect />
 			{showModal && <Modal message="Future features that I plan on adding" closeModal={handleModalClose} />}
-			<Footer modal={handleModalopen} />
+			<Footer modal={handleModalOpen} />
 		</div>
 	)
 }

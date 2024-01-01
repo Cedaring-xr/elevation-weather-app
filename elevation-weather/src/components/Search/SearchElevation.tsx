@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import isoMtn from '../../assets/iso-mtn-color.png'
 import isoMtn2 from '../../assets/iso-mtn-bw.png'
 import { BiSearchAlt2 } from 'react-icons/bi'
@@ -6,7 +6,7 @@ import list from '../../data/coloradoCities.json'
 import getFormattedWeatherData from '../../utils/weatherService'
 import { findClosestElevation } from '../../utils/weatherService'
 import ComparisonSlider from '../ComparisonSlider'
-import { TweatherData, City } from '../../userTypes'
+import { TweatherData } from '../../userTypes'
 import Banner from './Banner'
 import WeatherCity from './WeatherCity'
 
@@ -16,7 +16,7 @@ const SearchElevation = () => {
 	const [elevation, setElevation] = useState<string>('7,030')
 	const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
 	const [isDragging, setIsDragging] = useState(false)
-	const [weatherList, setWeatherList] = useState<TweatherData[] | null>([])
+	const [weatherList, setWeatherList] = useState<any>([])
 
 	// functions that are passed down to comparison slider
 	const handleDrag = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -49,21 +49,32 @@ const SearchElevation = () => {
 	}
 
 	// sorts elevation list and fetches weather
-	const handleElevationSearch = async () => {
-		const cityList: TweatherData[] = []
-
-		// get list of cities to search for
+	const handleElevationSearch = useCallback(async () => {
 		const elevationNumber = parseInt(elevation.replace(/,/g, '')) //remove comma and convert to number
 		const sortedList = findClosestElevation(list.cities, elevationNumber, 'elevation', 5)
 
-		sortedList.forEach((city: City) => {
-			console.log(city)
-			getFormattedWeatherData({ ...{ q: city.name }, units }).then((data) => {
-				cityList.push(data)
-			})
+		try {
+			const cityList: TweatherData[] = []
+			console.log('sorted list', sortedList)
+			for (const city of sortedList) {
+				await getFormattedWeatherData({ ...{ q: city.name }, units }).then((data) => {
+					cityList.push(data)
+				})
+			}
+			console.log('cityList', cityList)
+			return cityList
+		} catch (error) {
+			console.log('Error fetching data:', error)
+		}
+	}, [])
+
+	useEffect(() => {
+		handleElevationSearch().then((result) => {
+			console.log('result', result)
+			setWeatherList(result)
 		})
-		setWeatherList(cityList)
-	}
+		console.log('weatherList', weatherList)
+	}, [handleElevationSearch])
 
 	return (
 		<div className="bg-gradient-to-br from-cyan-600 to-sky-800 h-fit md:px-12 lg:px-32 py-8 md:py-12 shadow-xl shadow-gray-400 flex flex-col">
