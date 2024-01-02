@@ -24,6 +24,7 @@ const Modal: React.FC<ModalProps> = ({ message, closeModal }) => {
 				<h1 className="text-xl md:text-2xl text-center m-6 mt-16 lg:mt-6">{message}</h1>
 				<div id="list">
 					<ul className="mt-12 list-disc ml-8 lg:ml-20">
+						<li className="my-2">Adding a loading spinner on the elevation search page</li>
 						<li className="my-2">Adding a click animation to butttons on the site</li>
 						<li className="my-2">Adding elevation display on cities when searching by elevation</li>
 						<li className="my-2">Allowing to search for current elevation by using google maps api</li>

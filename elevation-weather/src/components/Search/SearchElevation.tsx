@@ -11,12 +11,13 @@ import Banner from './Banner'
 import WeatherCity from './WeatherCity'
 
 const SearchElevation = () => {
-	const [units, setUnits] = useState('Imperial')
+	const [units, setUnits] = useState('Imperial') // switching units is not implemented yet
 	//state for child component
 	const [elevation, setElevation] = useState<string>('7,030')
 	const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
 	const [isDragging, setIsDragging] = useState(false)
 	const [weatherList, setWeatherList] = useState<any>([])
+	const [search, setSearch] = useState(false)
 
 	// functions that are passed down to comparison slider
 	const handleDrag = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -48,32 +49,32 @@ const SearchElevation = () => {
 		setIsDragging(false)
 	}
 
-	// sorts elevation list and fetches weather
 	const handleElevationSearch = useCallback(async () => {
 		const elevationNumber = parseInt(elevation.replace(/,/g, '')) //remove comma and convert to number
 		const sortedList = findClosestElevation(list.cities, elevationNumber, 'elevation', 5)
 
 		try {
 			const cityList: TweatherData[] = []
-			console.log('sorted list', sortedList)
+			// console.log('sorted list', sortedList)
 			for (const city of sortedList) {
 				await getFormattedWeatherData({ ...{ q: city.name }, units }).then((data) => {
 					cityList.push(data)
 				})
 			}
-			console.log('cityList', cityList)
+			// console.log('cityList', cityList)
+			setSearch(true)
 			return cityList
 		} catch (error) {
 			console.log('Error fetching data:', error)
 		}
-	}, [])
+	}, [search]) // do not included elevation as a dependency here, it makes too many requests
 
 	useEffect(() => {
 		handleElevationSearch().then((result) => {
-			console.log('result', result)
+			// console.log('result', result)
+			setSearch(false)
 			setWeatherList(result)
 		})
-		console.log('weatherList', weatherList)
 	}, [handleElevationSearch])
 
 	return (
