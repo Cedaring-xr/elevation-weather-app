@@ -84,7 +84,7 @@ const getWeatherData = async (infoType, searchParams) => {
 }
 
 const getFormattedWeatherData = async (searchParams) => {
-	const formattedCurrentWeather = await getWeatherData('weather', searchParams).then(formatCurrentWeather)
+	const formattedCurrentWeather = await getWeatherData('direct', searchParams).then(formatCurrentWeather)
 
 	const { lat, lon } = formattedCurrentWeather
 
