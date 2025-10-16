@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
-import getFormattedWeatherData from '../../utils/weatherService'
+import { getFormattedCityWeatherData, getFormattedLocationWeatherData } from '../../utils/weatherService'
 import Forcast from '../forcast/Forcast'
 import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
@@ -81,15 +81,19 @@ const SearchLocation = () => {
 		const fetchWeather = async () => {
 			if ('q' in query) {
 				toast.info('Fetching weather for ' + query.q)
+				await getFormattedCityWeatherData({ ...query, units }).then((data) => {
+					setWeather(data)
+					console.log(weather)
+				})
 			} else if ('lat' in query) {
 				toast.info('Fetching weather for ' + query.lat + ' ' + query.lon)
+				await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
+					setWeather(data)
+					console.log(weather)
+				})
 			} else {
 				toast.info('Fetching weather info for current location')
 			}
-			await getFormattedWeatherData({ ...query, units }).then((data) => {
-				setWeather(data)
-				console.log(weather)
-			})
 		}
 
 		fetchWeather()

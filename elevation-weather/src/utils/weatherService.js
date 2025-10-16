@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
 
 const API_KEY = process.env.REACT_APP_API_KEY
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const COORDINANTS_URL = 'https://api.openweathermap.org/data/3.0/'
+const CITY_URL = 'https://api.openweathermap.org/geo/1.0/'
 
 // luxon date format stuff
 const formatToLocalTime = (secs, zone, format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a") =>
@@ -67,11 +68,13 @@ const formatForecastWeather = (data) => {
 	return { timezone, daily, hourly }
 }
 
-const getWeatherData = async (infoType, searchParams) => {
-	const url = new URL(BASE_URL + infoType)
+const getLocationWeatherData = async (infoType, searchParams) => {
+	console.log('test loc')
+	const url = new URL(COORDINANTS_URL + infoType)
 	url.search = new URLSearchParams({ ...searchParams, appid: API_KEY })
 
 	try {
+		console.log('url test', url)
 		const response = await fetch(url)
 		if (!response.ok) {
 			throw new Error('Error with weather response')
@@ -83,12 +86,48 @@ const getWeatherData = async (infoType, searchParams) => {
 	}
 }
 
-const getFormattedWeatherData = async (searchParams) => {
-	const formattedCurrentWeather = await getWeatherData('direct', searchParams).then(formatCurrentWeather)
+const getCityWeatherData = async (infoType, searchParams) => {
+	console.log('test')
+	const url = new URL(CITY_URL + infoType)
+	console.log('full url', url)
+	url.search = new URLSearchParams({ ...searchParams, appid: API_KEY })
+
+	try {
+		console.log(url)
+		const response = await fetch(url)
+		if (!response.ok) {
+			throw new Error('Error with weather response')
+		}
+		const data = await response.json()
+		return data
+	} catch (error) {
+		console.log('Fetch Weather Error', error)
+	}
+}
+
+const getFormattedLocationWeatherData = async (searchParams) => {
+	console.log('searching', searchParams)
+	const formattedCurrentWeather = await getLocationWeatherData('onecall', searchParams).then(formatCurrentWeather)
 
 	const { lat, lon } = formattedCurrentWeather
 
-	const formattedForecastWeather = await getWeatherData('onecall', {
+	const formattedForecastWeather = await getLocationWeatherData('onecall', {
+		lat,
+		lon,
+		exclude: 'current,minutely,alerts',
+		units: searchParams.units
+	}).then(formatForecastWeather)
+
+	return { ...formattedCurrentWeather, ...formattedForecastWeather }
+}
+
+const getFormattedCityWeatherData = async (searchParams) => {
+	console.log('searching', searchParams)
+	const formattedCurrentWeather = await getCityWeatherData('direct', searchParams).then(formatCurrentWeather)
+
+	const { lat, lon } = formattedCurrentWeather
+
+	const formattedForecastWeather = await getCityWeatherData('direct', {
 		lat,
 		lon,
 		exclude: 'current,minutely,alerts',
@@ -105,5 +144,6 @@ const findClosestElevation = (array, userInput, propertyName, amount) => {
 	return sortedList.slice(0, amount)
 }
 
-export default getFormattedWeatherData
+export { getFormattedLocationWeatherData }
+export { getFormattedCityWeatherData }
 export { formatToTime, formatToLocalTime, iconsUrlFromCode, findClosestElevation }
