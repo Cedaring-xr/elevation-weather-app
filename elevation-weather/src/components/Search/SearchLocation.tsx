@@ -9,16 +9,18 @@ import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TweatherData } from '../../userTypes'
+import { CitySearchData } from '../../userTypes'
 
 const SearchLocation = () => {
-	const [query, setQuery] = useState<{ q: string } | { lat: number; lon: number }>({ q: 'Denver' })
+	const [query, setQuery] = useState<{ lat: number; lon: number }>({ lat: 39.7392364, lon: -104.984862}) // no longer need both of these types since it is different calls
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
+	const [citySearch, setCitySearch] = useState<CitySearchData | null>(null)
 	const [city, setCity] = useState('')
 
 	const handleSearchClick = () => {
 		if (city) {
-			setQuery({ q: city })
+			setCitySearch({ q: city })
 		}
 	}
 
@@ -69,7 +71,7 @@ const SearchLocation = () => {
 
 	const handleSearch = (e: { preventDefault: () => void }) => {
 		e.preventDefault()
-		setQuery({ q: city })
+		setCitySearch({ q: city })
 	}
 
 	const handleUnitsChange = (e: { currentTarget: { name: string } }) => {
@@ -82,6 +84,9 @@ const SearchLocation = () => {
 			if ('q' in query) {
 				toast.info('Fetching weather for ' + query.q)
 				await getFormattedCityWeatherData({ ...query, units }).then((data) => {
+					setQuery({data.lat, data.lon})
+				})
+				await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
 					setWeather(data)
 					console.log(weather)
 				})
