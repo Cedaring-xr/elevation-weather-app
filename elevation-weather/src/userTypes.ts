@@ -1,3 +1,4 @@
+// return format for the location (direct) api call
 export type TweatherData = {
 	lat: number
 	lon: number
@@ -45,6 +46,7 @@ export type TweatherData = {
 	speed: number
 }
 
+// return format from the city (geo) api call
 export type CitySearchData = {
 	name: string
 	local_names?: {}

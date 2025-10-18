@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
-import { getFormattedCityWeatherData, getFormattedLocationWeatherData } from '../../utils/weatherService'
+import { getFormattedLocationWeatherData, getCityWeatherData } from '../../utils/weatherService'
 import Forcast from '../forcast/Forcast'
 import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
@@ -11,13 +11,19 @@ import 'react-toastify/dist/ReactToastify.css'
 import { TweatherData } from '../../userTypes'
 import { CitySearchData } from '../../userTypes'
 
+type CityType = {
+	q: string
+}
+
 const SearchLocation = () => {
-	const [query, setQuery] = useState<{ lat: number; lon: number }>({ lat: 39.7392364, lon: -104.984862}) // no longer need both of these types since it is different calls
+	// no longer need both of these types since it is different calls?
+	const [query, setQuery] = useState<{ lat: number; lon: number }>({ lat: 39.7392364, lon: -104.984862}) 
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
-	const [citySearch, setCitySearch] = useState<CitySearchData | null>(null)
+	const [citySearch, setCitySearch] = useState<CityType | null>(null)
 	const [city, setCity] = useState('')
 
+	// search bar button
 	const handleSearchClick = () => {
 		if (city) {
 			setCitySearch({ q: city })
@@ -81,24 +87,25 @@ const SearchLocation = () => {
 
 	useEffect(() => {
 		const fetchWeather = async () => {
-			if ('q' in query) {
-				toast.info('Fetching weather for ' + query.q)
-				await getFormattedCityWeatherData({ ...query, units }).then((data) => {
-					setQuery({data.lat, data.lon})
+			// this needs to be changed to fetching city data
+			if (citySearch != null) {
+				toast.info('Fetching weather for ' + citySearch.q)
+				await getCityWeatherData({ ...citySearch, units }).then((data) => {
+					console.log('return city data', data)
+					setQuery({ lat: 39.7392364, lon: -104.984862})
 				})
 				await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
-					setWeather(data)
-					console.log(weather)
-				})
-			} else if ('lat' in query) {
-				toast.info('Fetching weather for ' + query.lat + ' ' + query.lon)
-				await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
-					setWeather(data)
+					console.log('return from weather fetch', data)
+					setWeather(null)
 					console.log(weather)
 				})
 			} else {
-				toast.info('Fetching weather info for current location')
-			}
+				toast.info('Fetching weather for ' + query.lat + ' ' + query.lon)
+				await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
+					setWeather(null)
+					console.log(weather)
+				})
+			} 
 		}
 
 		fetchWeather()
@@ -110,7 +117,7 @@ const SearchLocation = () => {
 			className={` bg-gradient-to-br ${formatBackground()} h-fit md:px-12 lg:px-32 pt-8 pb-12 px-4 shadow-xl shadow-gray-400`}
 		>
 			<div>
-				<QuickLinks query={query} setQuery={setQuery} />
+				<QuickLinks query={query} setCitySearch={setCitySearch} />
 				<div className="flex justify-center mt-8">
 					<button className="button" onClick={handleLocationClick}>
 						Local Weather

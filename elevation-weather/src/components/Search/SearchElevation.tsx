@@ -3,7 +3,8 @@ import isoMtn from '../../assets/iso-mtn-color.png'
 import isoMtn2 from '../../assets/iso-mtn-bw.png'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import list from '../../data/coloradoCities.json'
-import { getFormattedCityWeatherData } from '../../utils/weatherService'
+// import { getFormattedCityWeatherData } from '../../utils/weatherService'
+import { getCityWeatherData } from '../../utils/weatherService'
 import { findClosestElevation } from '../../utils/weatherService'
 import ComparisonSlider from '../ComparisonSlider'
 import { TweatherData } from '../../userTypes'
@@ -55,9 +56,9 @@ const SearchElevation = () => {
 
 		try {
 			const cityList: TweatherData[] = []
-			// console.log('sorted list', sortedList)
+			console.log('sorted list', sortedList)
 			for (const city of sortedList) {
-				await getFormattedCityWeatherData({ ...{ q: city.name }, units }).then((data) => {
+				await getCityWeatherData({ ...{ q: city.name }, units }).then((data) => {
 					cityList.push(data)
 				})
 			}

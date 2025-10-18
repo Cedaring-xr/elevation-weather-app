@@ -27,6 +27,7 @@ const formatCurrentWeather = (data) => {
 
 	const { main: details, icon } = weather[0]
 
+	// this might need to change, as the format has changed
 	return {
 		lat,
 		lon,
@@ -69,7 +70,7 @@ const formatForecastWeather = (data) => {
 }
 
 const getLocationWeatherData = async (infoType, searchParams) => {
-	console.log('test loc')
+	console.log('test location')
 	const url = new URL(COORDINANTS_URL + infoType)
 	url.search = new URLSearchParams({ ...searchParams, appid: API_KEY })
 
@@ -87,21 +88,21 @@ const getLocationWeatherData = async (infoType, searchParams) => {
 }
 
 const getCityWeatherData = async (infoType, searchParams) => {
-	console.log('test')
+	console.log('test city search')
 	const url = new URL(CITY_URL + infoType)
-	console.log('full url', url)
+	console.log('full city url', url)
 	url.search = new URLSearchParams({ ...searchParams, appid: API_KEY })
 
 	try {
 		console.log(url)
 		const response = await fetch(url)
 		if (!response.ok) {
-			throw new Error('Error with weather response')
+			throw new Error('Error with fetching city response')
 		}
 		const data = await response.json()
 		return data
 	} catch (error) {
-		console.log('Fetch Weather Error', error)
+		console.log('Fetch City data Error', error)
 	}
 }
 
@@ -121,6 +122,7 @@ const getFormattedLocationWeatherData = async (searchParams) => {
 	return { ...formattedCurrentWeather, ...formattedForecastWeather }
 }
 
+// probably don't need this since I have to make 2 calls anyway
 const getFormattedCityWeatherData = async (searchParams) => {
 	console.log('searching', searchParams)
 	const formattedCurrentWeather = await getCityWeatherData('direct', searchParams).then(formatCurrentWeather)
@@ -145,5 +147,6 @@ const findClosestElevation = (array, userInput, propertyName, amount) => {
 }
 
 export { getFormattedLocationWeatherData }
-export { getFormattedCityWeatherData }
+export { getCityWeatherData }
+// export { getFormattedCityWeatherData }
 export { formatToTime, formatToLocalTime, iconsUrlFromCode, findClosestElevation }
