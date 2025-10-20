@@ -9,26 +9,18 @@ import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TweatherData } from '../../userTypes'
-import { CitySearchData } from '../../userTypes'
+import { CitySearchData } from '../../userTypes' // return type for geo call
 
 type CityType = {
 	q: string
 }
 
 const SearchLocation = () => {
-	// no longer need both of these types since it is different calls?
-	const [query, setQuery] = useState<{ lat: number; lon: number }>({ lat: 39.7392364, lon: -104.984862 })
+	const [query, setQuery] = useState<{ lat: number; lon: number }>({ lat: 39.7392364, lon: -104.984862 }) // default to Denver
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
-	const [citySearch, setCitySearch] = useState<CityType | null>(null)
+	const [citySearch, setCitySearch] = useState<CityType | null>({q: ''})
 	const [city, setCity] = useState('')
-
-	// search bar button
-	const handleSearchClick = () => {
-		if (city) {
-			setCitySearch({ q: city })
-		}
-	}
 
 	const formatBackground = () => {
 		if (!weather) return 'from-cyan-700 to blue-700'
@@ -75,10 +67,19 @@ const SearchLocation = () => {
 		}
 	}
 
-	// this isn't registering because it is not added to the useEffect, need another way to trigger re-render
-	const handleSearch = (e: { preventDefault: () => void }) => {
+	// search bar button
+	const handleSearchClick = () => {
+		if (city) {
+			setCitySearch({ q: city })
+		}
+		console.log('searching for city ', citySearch)
+	}
+
+	// pressing 'enter' on search bar jumps directly to here
+	const handleSearch = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 		setCitySearch({ q: city })
+		console.log('second search function for city: ', city)
 	}
 
 	const handleUnitsChange = (e: { currentTarget: { name: string } }) => {
@@ -88,12 +89,15 @@ const SearchLocation = () => {
 
 	useEffect(() => {
 		const fetchWeather = async () => {
-			// this needs to be changed to fetching city data
-			if (citySearch != null) {
+			if(citySearch == null) {
+				setCitySearch({q: 'Denver'})
+			}
+			else if (citySearch.q.length > 1) {
+				console.log("useEffect fetch weather if")
 				toast.info('Fetching weather for ' + citySearch.q)
 				await getCityWeatherData({ ...citySearch, units }).then((data) => {
 					console.log('return city data', data)
-					setQuery({ lat: 39.7392364, lon: -104.984862 })
+					setQuery({ lat: 39.7392364, lon: -104.984862 }) // this is temp data
 				})
 				await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
 					console.log('return from weather fetch', data)
@@ -110,7 +114,7 @@ const SearchLocation = () => {
 		}
 
 		fetchWeather()
-	}, [query, units, weather]) // do not use citySearch here
+	}, [query, units]) // do not use citySearch or weather here
 
 	return (
 		<div

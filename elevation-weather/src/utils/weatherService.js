@@ -28,6 +28,7 @@ const formatCurrentWeather = (data) => {
 	const { main: details, icon } = weather[0]
 
 	// this might need to change, as the format has changed
+	// this is the return from location search
 	return {
 		lat,
 		lon,
@@ -47,7 +48,6 @@ const formatCurrentWeather = (data) => {
 	}
 }
 
-// uses onecall api to format data
 const formatForecastWeather = (data) => {
 	let { timezone, daily, hourly } = data
 	daily = daily.slice(1, 6).map((d) => {
@@ -123,21 +123,21 @@ const getFormattedLocationWeatherData = async (searchParams) => {
 }
 
 // probably don't need this since I have to make 2 calls anyway
-const getFormattedCityWeatherData = async (searchParams) => {
-	console.log('searching', searchParams)
-	const formattedCurrentWeather = await getCityWeatherData('direct', searchParams).then(formatCurrentWeather)
+// const getFormattedCityWeatherData = async (searchParams) => {
+// 	console.log('searching', searchParams)
+// 	const formattedCurrentWeather = await getCityWeatherData('direct', searchParams).then(formatCurrentWeather)
 
-	const { lat, lon } = formattedCurrentWeather
+// 	const { lat, lon } = formattedCurrentWeather
 
-	const formattedForecastWeather = await getCityWeatherData('direct', {
-		lat,
-		lon,
-		exclude: 'current,minutely,alerts',
-		units: searchParams.units
-	}).then(formatForecastWeather)
+// 	const formattedForecastWeather = await getCityWeatherData('direct', {
+// 		lat,
+// 		lon,
+// 		exclude: 'current,minutely,alerts',
+// 		units: searchParams.units
+// 	}).then(formatForecastWeather)
 
-	return { ...formattedCurrentWeather, ...formattedForecastWeather }
-}
+// 	return { ...formattedCurrentWeather, ...formattedForecastWeather }
+// }
 
 const findClosestElevation = (array, userInput, propertyName, amount) => {
 	const sortedList = array.sort(
