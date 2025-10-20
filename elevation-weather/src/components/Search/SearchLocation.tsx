@@ -17,7 +17,7 @@ type CityType = {
 
 const SearchLocation = () => {
 	// no longer need both of these types since it is different calls?
-	const [query, setQuery] = useState<{ lat: number; lon: number }>({ lat: 39.7392364, lon: -104.984862}) 
+	const [query, setQuery] = useState<{ lat: number; lon: number }>({ lat: 39.7392364, lon: -104.984862 })
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
 	const [citySearch, setCitySearch] = useState<CityType | null>(null)
@@ -75,6 +75,7 @@ const SearchLocation = () => {
 		}
 	}
 
+	// this isn't registering because it is not added to the useEffect, need another way to trigger re-render
 	const handleSearch = (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 		setCitySearch({ q: city })
@@ -92,7 +93,7 @@ const SearchLocation = () => {
 				toast.info('Fetching weather for ' + citySearch.q)
 				await getCityWeatherData({ ...citySearch, units }).then((data) => {
 					console.log('return city data', data)
-					setQuery({ lat: 39.7392364, lon: -104.984862})
+					setQuery({ lat: 39.7392364, lon: -104.984862 })
 				})
 				await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
 					console.log('return from weather fetch', data)
@@ -105,11 +106,11 @@ const SearchLocation = () => {
 					setWeather(null)
 					console.log(weather)
 				})
-			} 
+			}
 		}
 
 		fetchWeather()
-	}, [query, units])
+	}, [query, units, weather]) // do not use citySearch here
 
 	return (
 		<div
