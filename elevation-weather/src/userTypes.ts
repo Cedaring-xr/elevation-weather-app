@@ -3,6 +3,7 @@ export type TweatherData = {
 	lat: number
 	lon: number
 	timezone: string
+	timezone_offset: string
 	elevation?: number
 	current: {
 		dt: number
@@ -18,32 +19,58 @@ export type TweatherData = {
 		visibility: number
 		wind_speed: number
 		wind_deg: number
-		wind_gust: number
+		weather: {
+			id: number
+			main: string
+			description: string
+			icon: string
+		}[]
 	}
-	daily: {
-		title: string
-		temp: number
-		icon: string
-	}[]
 	hourly: {
-		title: string
+		dt: number
 		temp: number
-		icon: string
+		feels_like: number
+		pressure: number
+		humidity: number
+		dew_point: number
+		uiv: number
+		clouds: number
+		visibility: number
+		wind_speed: number
+		wind_deg: number
+		weather: {
+			id: number
+			main: string
+			description: string
+			icon: string
+		}[]
+		pop: number
 	}[]
-
-	temp: number
-	feels_like: number
-	temp_min: number
-	temp_max: number
-	humidity: number
-	name: string
-	dt: number
-	country: string
-	sunrise: number
-	sunset: number
-	details: string
-	icon: string
-	speed: number
+	daily: {
+		dt: number
+		sunries: number
+		sunset: number
+		moonrise: number
+		moonset: number
+		moonphase: number
+		summary: string
+		temp: {
+			day: number
+			min: number
+			max: number
+			night: number
+			even: number
+			morn: number
+		}
+		feels_like: {
+			day: number
+			night: number
+			eve: number
+			morn: number
+		}
+		}[]
+		pop: number
+	}[]
 }
 
 // return format from the city (geo) api call
