@@ -10,7 +10,7 @@ type Props = {
 export default function WeatherCity({ city }: Props) {
 	return (
 		<div>
-			<div className="flex flex-row justify-between items-center text-white w-2/3 md:w-1/2 mx-auto">
+			{/* <div className="flex flex-row justify-between items-center text-white w-2/3 md:w-1/2 mx-auto">
 				<span className="text-2xl">{city.name}</span>
 				<img src={iconsUrlFromCode(city.icon)} alt="" />
 				<p className="flex flex-col text-3xl">{city.temp.toFixed()}&deg;</p>
@@ -35,7 +35,7 @@ export default function WeatherCity({ city }: Props) {
 					<BsThermometerSun className="text-xl mr-1" />
 					High: {city.temp_max.toFixed()}&deg;
 				</p>
-			</div>
+			</div> */}
 		</div>
 	)
 }

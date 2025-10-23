@@ -68,9 +68,8 @@ export type TweatherData = {
 			eve: number
 			morn: number
 		}
-		}[]
-		pop: number
 	}[]
+	pop: number
 }
 
 // return format from the city (geo) api call
@@ -81,6 +80,12 @@ export type CitySearchData = {
 	lon: number
 	country: string
 	state: string
+}
+
+export type optionType = {
+	name: string
+	lat: number
+	lon: number
 }
 
 // OLD FORMAT

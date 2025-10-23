@@ -12,7 +12,7 @@ type WeatherProps = {
 const CurrentWeather: React.FC<WeatherProps> = ({ weather }) => {
 	return (
 		<div>
-			<div className="flex items-center justify-center pt-6 pb-2">
+			{/* <div className="flex items-center justify-center pt-6 pb-2">
 				<p className="text-xl text-white">{weather && weather.details}</p>
 			</div>
 			{weather && weather.details ? (
@@ -44,7 +44,7 @@ const CurrentWeather: React.FC<WeatherProps> = ({ weather }) => {
 				</>
 			) : (
 				''
-			)}
+			)} */}
 		</div>
 	)
 }

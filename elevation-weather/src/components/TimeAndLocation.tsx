@@ -9,7 +9,7 @@ type TimeAndLocationProps = {
 const TimeAndLocation: React.FC<TimeAndLocationProps> = ({ weather }) => {
 	return (
 		<div>
-			<div className="flex items-center justify-center my-6">
+			{/* <div className="flex items-center justify-center my-6">
 				{weather && weather.dt ? (
 					<p className="text-white text-xl">{formatToLocalTime(weather.dt, weather.timezone)}</p>
 				) : (
@@ -18,7 +18,7 @@ const TimeAndLocation: React.FC<TimeAndLocationProps> = ({ weather }) => {
 			</div>
 			<div className="flex items-center justify-center my-3">
 				<p className="text-white text-3xl sans-font">{weather && `${weather.name}, ${weather.country}`}</p>
-			</div>
+			</div> */}
 		</div>
 	)
 }

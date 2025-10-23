@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { useState, useEffect } from 'react'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import CurrentWeather from '../CurrentWeather'
@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TweatherData } from '../../userTypes'
 import { CitySearchData } from '../../userTypes' // return type for geo call
+import { optionType } from '../../userTypes'
 
 type CityType = {
 	q: string
@@ -19,40 +20,42 @@ const SearchLocation = () => {
 	const [query, setQuery] = useState<{ lat: number; lon: number }>({ lat: 39.7392364, lon: -104.984862 }) // default to Denver
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
-	const [citySearch, setCitySearch] = useState<CityType | null>({q: ''})
-	const [city, setCity] = useState('')
+	const [citySearch, setCitySearch] = useState<CityType | null>({ q: '' })
+	const [city, setCity] = useState<string>('')
+	const [searchOptions, setSearchOptions] = useState<[]>([])
+	const [cityOption, setCityOption] = useState<optionType | null>(null)
 
 	const formatBackground = () => {
 		if (!weather) return 'from-cyan-700 to blue-700'
 		// const threshold = units === 'metric' ? 20 : 60
 		//todo: normalize weather.temp for both celcius and farenheit
-		const thresholdValue = Math.round(weather.temp / 10)
-		switch (thresholdValue) {
-			case 0:
-				return 'from-zinc-400 to-sky-800'
-			case 1:
-				return 'from-zinc-400 to-sky-800'
-			case 2:
-				return 'from-zinc-400 to-sky-700'
-			case 3:
-				return 'from-zinc-400 to-sky-700'
-			case 4:
-				return 'from-cyan-600 to-sky-800'
-			case 5:
-				return 'from-cyan-600 to-sky-800'
-			case 6:
-				return 'from-emerald-400 to-blue-600'
-			case 7:
-				return 'from-emerald-400 to-blue-700'
-			case 8:
-				return 'from-amber-600 to-orange-700'
-			case 9:
-				return 'from-amber-600 to-orange-700'
-			case 10:
-				return 'from-amber-600 to-rose-600'
-			default:
-				return 'from-cyan-600 to-sky-800'
-		}
+		// const thresholdValue = Math.round(weather.temp / 10)
+		// switch (thresholdValue) {
+		// 	case 0:
+		// 		return 'from-zinc-400 to-sky-800'
+		// 	case 1:
+		// 		return 'from-zinc-400 to-sky-800'
+		// 	case 2:
+		// 		return 'from-zinc-400 to-sky-700'
+		// 	case 3:
+		// 		return 'from-zinc-400 to-sky-700'
+		// 	case 4:
+		// 		return 'from-cyan-600 to-sky-800'
+		// 	case 5:
+		// 		return 'from-cyan-600 to-sky-800'
+		// 	case 6:
+		// 		return 'from-emerald-400 to-blue-600'
+		// 	case 7:
+		// 		return 'from-emerald-400 to-blue-700'
+		// 	case 8:
+		// 		return 'from-amber-600 to-orange-700'
+		// 	case 9:
+		// 		return 'from-amber-600 to-orange-700'
+		// 	case 10:
+		// 		return 'from-amber-600 to-rose-600'
+		// 	default:
+		// 		return 'from-cyan-600 to-sky-800'
+		// }
 	}
 
 	const handleLocationClick = () => {
@@ -82,6 +85,34 @@ const SearchLocation = () => {
 		console.log('second search function for city: ', city)
 	}
 
+	const getSearchOptions = (value: string) => {
+		fetch(
+			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=5&appid=${
+				process.env.REACT_APP_API_KEY
+			}`
+		)
+			.then((res) => res.json())
+			.then((data) => setSearchOptions(data))
+	}
+
+	const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value.trim()
+		setCity(value)
+		if (value === '') return
+		getSearchOptions(value)
+	}
+
+	const onOptionSelect = (option: optionType) => {
+		console.log(option.name)
+		fetch(
+			`https://api.openweathermap.org/data/3.0/onecall?lat=${option.lat}&lon=${option.lon}&units=imperial&appid=${process.env.REACT_APP_API_KEY}`
+		)
+			.then((res) => res.json())
+			.then((data) => setWeather(data))
+
+		console.log(weather)
+	}
+
 	const handleUnitsChange = (e: { currentTarget: { name: string } }) => {
 		const selectedUnit = e.currentTarget.name
 		if (units !== selectedUnit) setUnits(selectedUnit)
@@ -89,11 +120,10 @@ const SearchLocation = () => {
 
 	useEffect(() => {
 		const fetchWeather = async () => {
-			if(citySearch == null) {
-				setCitySearch({q: 'Denver'})
-			}
-			else if (citySearch.q.length > 1) {
-				console.log("useEffect fetch weather if")
+			if (citySearch == null) {
+				setCitySearch({ q: 'Denver' })
+			} else if (citySearch.q.length > 1) {
+				console.log('useEffect fetch weather if')
 				toast.info('Fetching weather for ' + citySearch.q)
 				await getCityWeatherData({ ...citySearch, units }).then((data) => {
 					console.log('return city data', data)
@@ -114,7 +144,7 @@ const SearchLocation = () => {
 		}
 
 		fetchWeather()
-	}, [query, units]) // do not use citySearch or weather here
+	}, []) // do not use citySearch or weather here
 
 	return (
 		<div
@@ -133,14 +163,27 @@ const SearchLocation = () => {
 						<form onSubmit={handleSearch}>
 							<input
 								value={city}
-								onChange={(e) => setCity(e.currentTarget.value)}
+								onChange={onInputChange}
 								type="text"
 								placeholder="search by City..."
 								className="text-md p-2 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase rounded-l-lg"
 							></input>
+							<ul className="absolute top-9 bg-white ml-1 rounded-b-md">
+								{searchOptions.map((option: optionType, index: number) => (
+									<li key={option.name + '-' + index}>
+										<button
+											className="text-left text-sm w-full hover:bg-zinc-700 hover:text-white px-2 py-1 cursor-pointer"
+											onClick={() => onOptionSelect(option)}
+										>
+											{option.name}
+										</button>
+									</li>
+								))}
+							</ul>
 						</form>
 
 						<div
+							id="searchButton"
 							className="absolute right-0 top-0 bg-slate-900 h-[40px] w-[50px] rounded-r-lg"
 							onClick={handleSearchClick}
 						>
@@ -166,8 +209,8 @@ const SearchLocation = () => {
 							<CurrentWeather weather={weather} />
 						</div>
 						<div className="forcast-container">
-							<Forcast title="Hourly Forcast" items={weather?.hourly} />
-							<Forcast title="Daily Forcast" items={weather?.daily} />
+							{/* <Forcast title="Hourly Forcast" items={weather?.hourly} />
+							<Forcast title="Daily Forcast" items={weather?.daily} /> */}
 						</div>
 					</>
 				) : (

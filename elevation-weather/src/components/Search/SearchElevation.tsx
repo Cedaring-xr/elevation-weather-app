@@ -116,7 +116,7 @@ const SearchElevation = () => {
 					Find Current Elevation
 				</button>
 			</div>
-			<div className="text-white m-4">
+			{/* <div className="text-white m-4">
 				<h3 className="my-2 text-xl">Cities close to the selected elevation</h3>
 				<hr />
 				{weatherList && weatherList.length > 1 ? (
@@ -128,7 +128,7 @@ const SearchElevation = () => {
 				) : (
 					''
 				)}
-			</div>
+			</div> */}
 		</div>
 	)
 }
