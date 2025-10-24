@@ -1,17 +1,14 @@
 import React, { useState } from 'react'
 import { CitySearchData } from '../../userTypes'
 
-const citiesList = [
-	{ id: 1, name: 'Paris' },
-	{ id: 2, name: 'Tokyo' },
-	{ id: 3, name: 'Los Angeles' },
-	{ id: 4, name: 'Denver' }
-]
-
 const QuickLinks = () => {
-	const cities = citiesList
+	const cities = [
+		{ id: 1, name: 'Paris' },
+		{ id: 2, name: 'Tokyo' },
+		{ id: 3, name: 'Los Angeles' },
+		{ id: 4, name: 'Denver' }
+	]
 
-	const [citySearchText, setCitySearchText] = useState<string>('')
 	const [cityResult, setCityResult] = useState<CitySearchData>()
 	const [weather, setWeather] = useState<any>({}) //return of all weather data
 
