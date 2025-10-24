@@ -21,6 +21,7 @@ const TimeAndLocation: React.FC<TimeAndLocationProps> = ({ weather, location }) 
 			<div className="flex items-center justify-center my-3">
 				<p className="text-white text-3xl sans-font">
 					{/* location name and coutry will be undefined for local search */}
+					{/* need to change to something else if blank */}
 					{weather && location && `${location.name}, ${location.country}`}
 				</p>
 			</div>
