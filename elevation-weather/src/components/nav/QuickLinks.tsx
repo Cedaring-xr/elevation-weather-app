@@ -1,9 +1,5 @@
-import React from 'react'
-
-type LinkProps = {
-	query: { q: string } | { lat: number; lon: number } // is this needed???
-	setCitySearch: React.Dispatch<React.SetStateAction<{ q: string } | null>>
-}
+import React, { useState } from 'react'
+import { CitySearchData } from '../../userTypes'
 
 const citiesList = [
 	{ id: 1, name: 'Paris' },
@@ -12,16 +8,46 @@ const citiesList = [
 	{ id: 4, name: 'Denver' }
 ]
 
-const QuickLinks: React.FC<LinkProps> = ({ setCitySearch }) => {
+const QuickLinks = () => {
 	const cities = citiesList
-	// this needs to swap city name for lat / lon or make the first api call
+
+	const [citySearchText, setCitySearchText] = useState<string>('')
+	const [cityResult, setCityResult] = useState<CitySearchData>()
+	const [weather, setWeather] = useState<any>({}) //return of all weather data
+
+	const fetchWeather = (cityData: CitySearchData) => {
+		fetch(
+			`https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=imperial&appid=${process.env.REACT_APP_API_KEY}`
+		)
+			.then((res) => res.json())
+			.then((data) => setWeather(data))
+
+		console.log('full weather return', weather)
+	}
+
+	const fullSearch = async (value: string) => {
+		await fetch(
+			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${
+				process.env.REACT_APP_API_KEY
+			}`
+		)
+			.then((res) => res.json())
+			.then((data) => setCityResult(data[0]))
+			.then(() => {
+				if (cityResult) {
+					console.log('city result', cityResult)
+					fetchWeather(cityResult)
+				}
+			})
+	}
+
 	return (
 		<div className="flex flex-row justify-around items-center m-1 lg:m-4 px-2 md:px-8 bg-neutral-100 rounded-lg text-sm md:text-base">
 			{cities.map((city) => (
 				<button
 					key={city.id}
-					className="uppercase font-bold text-stone-800"
-					onClick={() => setCitySearch({ q: city.name })}
+					className="uppercase font-bold text-stone-800 mx-2"
+					onClick={() => fullSearch(city.name)}
 				>
 					{city.name}
 				</button>
