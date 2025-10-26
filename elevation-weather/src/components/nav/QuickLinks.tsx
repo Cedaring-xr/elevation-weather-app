@@ -24,9 +24,7 @@ const QuickLinks = () => {
 
 	const fullSearch = async (value: string) => {
 		await fetch(
-			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${
-				process.env.REACT_APP_API_KEY
-			}`
+			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${process.env.REACT_APP_API_KEY}`
 		)
 			.then((res) => res.json())
 			.then((data) => setCityResult(data[0]))

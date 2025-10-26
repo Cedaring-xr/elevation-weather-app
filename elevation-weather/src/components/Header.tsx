@@ -3,6 +3,7 @@ import React from 'react'
 const Header = () => {
 	return (
 		<div className="w-screen overflow-hidden h-[220px] bg-stone-900">
+			{/* maybe switch gif image to pull from S3? */}
 			<img
 				className="w-screen min-h-[200px] xl:max-w-[1800px] max-h-[220px] mx-auto"
 				src="https://mray-dev-resources.s3.us-east-2.amazonaws.com/weather-app/headerBackground.gif"

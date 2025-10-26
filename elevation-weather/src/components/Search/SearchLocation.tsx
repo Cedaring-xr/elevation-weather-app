@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
-import { getFormattedLocationWeatherData, getCityWeatherData } from '../../utils/weatherService'
+// import { getFormattedLocationWeatherData, getCityWeatherData } from '../../utils/weatherService'
 import Forcast from '../forcast/Forcast'
 import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
@@ -100,9 +100,7 @@ const SearchLocation = () => {
 
 	const getSearchOptions = (value: string) => {
 		fetch(
-			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${
-				process.env.REACT_APP_API_KEY
-			}`
+			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${process.env.REACT_APP_API_KEY}`
 		)
 			.then((res) => res.json())
 			// .then((data) => setSearchOptions(data))
@@ -229,7 +227,7 @@ const SearchLocation = () => {
 							<CurrentWeather weather={weather} />
 						</div>
 						<div className="forcast-container">
-							{/* <Forcast title="Hourly Forcast" items={weather?.hourly} />
+							{/* <Forcast title="Hourly Forcast" items={weather?.hourly} /> format for items needs to be updated
 							<Forcast title="Daily Forcast" items={weather?.daily} /> */}
 						</div>
 					</>

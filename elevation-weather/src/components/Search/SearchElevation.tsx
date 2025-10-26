@@ -3,7 +3,6 @@ import isoMtn from '../../assets/iso-mtn-color.png'
 import isoMtn2 from '../../assets/iso-mtn-bw.png'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import list from '../../data/coloradoCities.json'
-// import { getFormattedCityWeatherData } from '../../utils/weatherService'
 import { getCityWeatherData } from '../../utils/weatherService'
 import { findClosestElevation } from '../../utils/weatherService'
 import ComparisonSlider from '../ComparisonSlider'
@@ -72,7 +71,6 @@ const SearchElevation = () => {
 
 	useEffect(() => {
 		handleElevationSearch().then((result) => {
-			// console.log('result', result)
 			setSearch(false)
 			setWeatherList(result)
 		})
@@ -116,7 +114,7 @@ const SearchElevation = () => {
 					Find Current Elevation
 				</button>
 			</div>
-			{/* <div className="text-white m-4">
+			<div className="text-white m-4">
 				<h3 className="my-2 text-xl">Cities close to the selected elevation</h3>
 				<hr />
 				{weatherList && weatherList.length > 1 ? (
@@ -128,7 +126,7 @@ const SearchElevation = () => {
 				) : (
 					''
 				)}
-			</div> */}
+			</div>
 		</div>
 	)
 }
