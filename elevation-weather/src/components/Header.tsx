@@ -5,7 +5,7 @@ const Header = () => {
 		<div className="w-screen overflow-hidden h-[220px] bg-stone-900">
 			<img
 				className="w-screen min-h-[200px] xl:max-w-[1800px] max-h-[220px] mx-auto"
-				src="/assets/images/headerBackground.gif"
+				src="https://mray-dev-resources.s3.us-east-2.amazonaws.com/weather-app/headerBackground.gif"
 				alt="mist tree background"
 			/>
 			<div className="absolute top-0 bg-slate-800 py-3 px-4 md:px-12 lg:px-24 lg:ml-[28%] rounded-md m-2 opacity-80">
