@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
-// import { getFormattedLocationWeatherData, getCityWeatherData } from '../../utils/weatherService'
+import { fetchLocationWeather } from '../../utils/weatherService'
 import Forcast from '../forcast/Forcast'
 import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
@@ -22,7 +22,7 @@ const SearchLocation = () => {
 	const [city, setCity] = useState<string>('')
 	const [cityOption, setCityOption] = useState<optionType | null>(null)
 	const [searchOptions, setSearchOptions] = useState<[]>([])
-	const [citySearched, setCitySearched] = useState<CitySearchData | null>(null)
+	const [citySearched, setCitySearched] = useState<CityType | null>(null)
 	const [locationData, setLocationData] = useState<ReverseGEO | null>(null)
 
 	const formatBackground = () => {
@@ -72,7 +72,10 @@ const SearchLocation = () => {
 					`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${process.env.REACT_APP_API_KEY}`
 				)
 					.then((res) => res.json())
-					.then((data) => setLocationData(data))
+					.then((data) => {
+						console.log('data', data[0].name)
+						setLocationData(data[0].name)
+					})
 			})
 		} else {
 			alert('Application does not have permission to use local geolocation')
@@ -108,9 +111,8 @@ const SearchLocation = () => {
 				process.env.REACT_APP_API_KEY
 			}`
 		)
-			.then((res) => res.json())
 			// .then((data) => setSearchOptions(data))
-			.then((data) => setCitySearched(data))
+			.then((data) => setCitySearched(null))
 	}
 
 	const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -121,7 +123,7 @@ const SearchLocation = () => {
 	}
 
 	const onOptionSelect = (option: optionType) => {
-		console.log('test')
+		toast.info('Fetching weather for ' + option.name)
 		setCityOption(option)
 		fetch(
 			`https://api.openweathermap.org/data/3.0/onecall?lat=${option.lat}&lon=${option.lon}&units=imperial&appid=${process.env.REACT_APP_API_KEY}`
@@ -146,31 +148,35 @@ const SearchLocation = () => {
 
 	// useEffect(() => {
 	// 	const fetchWeather = async () => {
-	// 		if (citySearch == null) {
-	// 			setCitySearch({ q: 'Denver' })
-	// 		} else if (citySearch.q.length > 1) {
+	// 		//initial action on load
+	// 		if (citySearched === undefined) {
+	// 			setCitySearched({ q: 'Denver' })
+	// 		} else if (citySearched == null) {
+	// 			setCitySearched({ q: 'Denver' })
+	// 		} else if (citySearched.q.length > 1) {
 	// 			console.log('useEffect fetch weather if')
-	// 			toast.info('Fetching weather for ' + citySearch.q)
-	// 			await getCityWeatherData({ ...citySearch, units }).then((data) => {
-	// 				console.log('return city data', data)
-	// 				setQuery({ lat: 39.7392364, lon: -104.984862 }) // this is temp data
-	// 			})
-	// 			await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
-	// 				console.log('return from weather fetch', data)
-	// 				setWeather(null)
-	// 				console.log(weather)
-	// 			})
+	// 			toast.info('Fetching weather for ' + citySearched.q)
+
+	// 			// await getCityWeatherData({ ...citySearch, units }).then((data) => {
+	// 			// 	console.log('return city data', data)
+	// 			// 	setQuery({ lat: 39.7392364, lon: -104.984862 }) // this is temp data
+	// 			// })
+	// 			// await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
+	// 			// 	console.log('return from weather fetch', data)
+	// 			// 	setWeather(null)
+	// 			// 	console.log(weather)
+	// 			// })
 	// 		} else {
 	// 			toast.info('Fetching weather for ' + query.lat + ' ' + query.lon)
-	// 			await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
-	// 				setWeather(null)
-	// 				console.log(weather)
-	// 			})
+	// 			// await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
+	// 			// 	setWeather(null)
+	// 			// 	console.log(weather)
+	// 			// })
 	// 		}
 	// 	}
 
 	// 	fetchWeather()
-	// }, []) // do not use citySearch or weather here
+	// }, [citySearched, query.lat, query.lon])
 
 	return (
 		<div
@@ -178,7 +184,7 @@ const SearchLocation = () => {
 			className={` bg-gradient-to-br ${formatBackground()} h-fit md:px-12 lg:px-32 pt-8 pb-12 px-4 shadow-xl shadow-gray-400`}
 		>
 			<div>
-				<QuickLinks />
+				<QuickLinks cityData={locationData} weather={setWeather} />
 				<div className="flex justify-center mt-8">
 					<button className="button" onClick={handleLocationClick}>
 						Local Weather
@@ -233,8 +239,8 @@ const SearchLocation = () => {
 							<CurrentWeather weather={weather} />
 						</div>
 						<div className="forcast-container">
-							{/* <Forcast title="Hourly Forcast" items={weather?.hourly} /> format for items needs to be updated
-							<Forcast title="Daily Forcast" items={weather?.daily} /> */}
+							{/* <Forcast title="Hourly Forcast" items={weather?.hourly} /> */}
+							<Forcast title="Daily Forcast" items={weather?.daily} />
 						</div>
 					</>
 				) : (

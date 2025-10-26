@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { formatToLocalTime } from '../utils/weatherService'
 import { TweatherData, ReverseGEO } from '../userTypes'
 
@@ -8,6 +8,9 @@ type TimeAndLocationProps = {
 }
 
 const TimeAndLocation: React.FC<TimeAndLocationProps> = ({ weather, location }) => {
+	useEffect(() => {
+		console.log('use effect locatoin', location)
+	}, [location])
 	return (
 		<div>
 			<div className="flex items-center justify-center my-6">
@@ -18,11 +21,15 @@ const TimeAndLocation: React.FC<TimeAndLocationProps> = ({ weather, location }) 
 				)}
 			</div>
 			<div className="flex items-center justify-center my-3">
-				<p className="text-white text-3xl sans-font">
-					{/* location name and coutry will be undefined for local search */}
-					{/* need to change to something else if blank */}
-					{weather && location && `${location[0].name}, ${location[0].country}`}
-				</p>
+				{location ? (
+					<p className="text-white text-3xl sans-font">
+						{/* location name and coutry will be undefined for local search */}
+						{/* need to change to something else if blank */}
+						{`${location}`}
+					</p>
+				) : (
+					''
+				)}
 			</div>
 		</div>
 	)

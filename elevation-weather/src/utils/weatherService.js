@@ -12,7 +12,10 @@ const formatToTime = (secs, format = 'h:mm a') => {
 	return DateTime.fromSeconds(secs).toFormat(format)
 }
 
-const iconsUrlFromCode = (code) => `https://openweathermap.org/img/wn/${code}@2x.png`
+const iconsUrlFromCode = (code) => {
+	console.log('icon code', code)
+	return `https://openweathermap.org/img/wn/01n@2x.png`
+}
 
 const formatCurrentWeather = (data) => {
 	const {
@@ -67,6 +70,23 @@ const formatForecastWeather = (data) => {
 	return { timezone, daily, hourly }
 }
 
+const fetchLocationWeather = async (query: string) => {
+	try {
+		const response = await fetch(
+			`https://api.openweathermap.org/geo/1.0/direct?q=${query.trim()}&limit=1&appid=${
+				process.env.REACT_APP_API_KEY
+			}`
+		)
+		if (!response.ok) {
+			throw new Error('Error with weather response')
+		}
+		const data = await response.json()
+		return data
+	} catch (error) {
+		console.log('Fetch Weather Error', error)
+	}
+}
+
 const getLocationWeatherData = async (infoType, searchParams) => {
 	console.log('test location')
 	const url = new URL(COORDINANTS_URL + infoType)
@@ -104,6 +124,8 @@ const getCityWeatherData = async (infoType, searchParams) => {
 	}
 }
 
+const formatForcast = async () => {}
+
 const getFormattedLocationWeatherData = async (searchParams) => {
 	console.log('searching', searchParams)
 	const formattedCurrentWeather = await getLocationWeatherData('onecall', searchParams).then(formatCurrentWeather)
@@ -130,3 +152,4 @@ const findClosestElevation = (array, userInput, propertyName, amount) => {
 export { getFormattedLocationWeatherData }
 export { getCityWeatherData }
 export { formatToTime, formatToLocalTime, iconsUrlFromCode, findClosestElevation }
+export { fetchLocationWeather }

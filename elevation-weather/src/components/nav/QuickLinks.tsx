@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CitySearchData } from '../../userTypes'
 
-const QuickLinks = () => {
+const QuickLinks = (cityData: any, setWeather: any) => {
 	const cities = [
 		{ id: 1, name: 'Paris' },
 		{ id: 2, name: 'Tokyo' },
@@ -10,7 +10,7 @@ const QuickLinks = () => {
 	]
 
 	const [cityResult, setCityResult] = useState<CitySearchData>()
-	const [weather, setWeather] = useState<any>({}) //return of all weather data
+	// const [weather, setWeather] = useState<any>({}) //return of all weather data
 
 	const fetchWeather = (cityData: CitySearchData) => {
 		fetch(
@@ -18,13 +18,13 @@ const QuickLinks = () => {
 		)
 			.then((res) => res.json())
 			.then((data) => setWeather(data))
-
-		console.log('full weather return', weather)
 	}
 
 	const fullSearch = async (value: string) => {
 		await fetch(
-			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${process.env.REACT_APP_API_KEY}`
+			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${
+				process.env.REACT_APP_API_KEY
+			}`
 		)
 			.then((res) => res.json())
 			.then((data) => setCityResult(data[0]))
