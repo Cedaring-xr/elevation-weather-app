@@ -1,11 +1,10 @@
 import React from 'react'
 import { formatToLocalTime } from '../utils/weatherService'
-import { TweatherData } from '../userTypes'
-import { CitySearchData } from '../userTypes'
+import { TweatherData, ReverseGEO } from '../userTypes'
 
 type TimeAndLocationProps = {
 	weather: TweatherData | null
-	location: CitySearchData | null
+	location: ReverseGEO | null
 }
 
 const TimeAndLocation: React.FC<TimeAndLocationProps> = ({ weather, location }) => {
@@ -22,7 +21,7 @@ const TimeAndLocation: React.FC<TimeAndLocationProps> = ({ weather, location }) 
 				<p className="text-white text-3xl sans-font">
 					{/* location name and coutry will be undefined for local search */}
 					{/* need to change to something else if blank */}
-					{weather && location && `${location.name}, ${location.country}`}
+					{weather && location && `${location[0].name}, ${location[0].country}`}
 				</p>
 			</div>
 		</div>

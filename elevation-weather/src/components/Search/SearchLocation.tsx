@@ -8,9 +8,7 @@ import Forcast from '../forcast/Forcast'
 import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { TweatherData } from '../../userTypes'
-import { CitySearchData } from '../../userTypes' // return type for geo call
-import { optionType } from '../../userTypes'
+import { TweatherData, CitySearchData, optionType, ReverseGEO } from '../../userTypes'
 
 type CityType = {
 	q: string
@@ -25,6 +23,7 @@ const SearchLocation = () => {
 	const [cityOption, setCityOption] = useState<optionType | null>(null)
 	const [searchOptions, setSearchOptions] = useState<[]>([])
 	const [citySearched, setCitySearched] = useState<CitySearchData | null>(null)
+	const [locationData, setLocationData] = useState<ReverseGEO | null>(null)
 
 	const formatBackground = () => {
 		if (!weather) return 'from-cyan-700 to blue-700'
@@ -69,6 +68,11 @@ const SearchLocation = () => {
 				)
 					.then((res) => res.json())
 					.then((data) => setWeather(data))
+				fetch(
+					`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${process.env.REACT_APP_API_KEY}`
+				)
+					.then((res) => res.json())
+					.then((data) => setLocationData(data))
 			})
 		} else {
 			alert('Application does not have permission to use local geolocation')
@@ -100,7 +104,9 @@ const SearchLocation = () => {
 
 	const getSearchOptions = (value: string) => {
 		fetch(
-			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${process.env.REACT_APP_API_KEY}`
+			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${
+				process.env.REACT_APP_API_KEY
+			}`
 		)
 			.then((res) => res.json())
 			// .then((data) => setSearchOptions(data))
@@ -221,7 +227,7 @@ const SearchLocation = () => {
 				{weather ? (
 					<>
 						<div className="location-container">
-							<TimeAndLocation weather={weather} location={citySearched} />
+							<TimeAndLocation weather={weather} location={locationData} />
 						</div>
 						<div className="weather-container">
 							<CurrentWeather weather={weather} />

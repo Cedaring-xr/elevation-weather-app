@@ -82,6 +82,15 @@ export type CitySearchData = {
 	state: string
 }
 
+export type ReverseGEO = {
+	name: string
+	local_names?: {}
+	lat: number
+	lon: number
+	country: string
+	state: string
+}[]
+
 // format for auto-fill of search with multiple city suggestions
 export type optionType = {
 	name: string
