@@ -10,6 +10,17 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TweatherData, CitySearchData, optionType, ReverseGEO } from '../../userTypes'
 
+const DenverDefault = [
+	{
+		name: 'Denver',
+		local_names: {},
+		lat: 39.7392364,
+		lon: -104.984862,
+		country: 'US',
+		state: 'Colorado'
+	}
+]
+
 type CityType = {
 	q: string
 }
@@ -24,6 +35,8 @@ const SearchLocation = () => {
 	const [searchOptions, setSearchOptions] = useState<[]>([])
 	const [citySearched, setCitySearched] = useState<CityType | null>(null)
 	const [locationData, setLocationData] = useState<ReverseGEO | null>(null)
+
+	const [cityResult, setCityResult] = useState<CitySearchData>(DenverDefault[0])
 
 	const formatBackground = () => {
 		if (!weather) return 'from-cyan-700 to blue-700'
@@ -58,7 +71,7 @@ const SearchLocation = () => {
 		}
 	}
 
-	const handleLocationClick = () => {
+	const handleLocalLocationClick = () => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				let lat = position.coords.latitude
@@ -73,8 +86,8 @@ const SearchLocation = () => {
 				)
 					.then((res) => res.json())
 					.then((data) => {
-						console.log('data', data[0].name)
-						setLocationData(data[0].name)
+						console.log('data', data)
+						setLocationData(data)
 					})
 			})
 		} else {
@@ -139,12 +152,56 @@ const SearchLocation = () => {
 		if (units !== selectedUnit) setUnits(selectedUnit)
 	}
 
+	// full search for quicklinks tabs
+	const fullSearch = async (value: string) => {
+		await fetch(
+			`https://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=1&appid=${
+				process.env.REACT_APP_API_KEY
+			}`
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				setLocationData(data)
+				setCityResult(data)
+			})
+
+			.then(() => {
+				if (cityResult) {
+					console.log('city result', cityResult)
+					fetchWeather(cityResult)
+				}
+			})
+	}
+
+	const fetchWeather = async (cityData: CitySearchData) => {
+		try {
+			const response = await fetch(
+				`https://api.openweathermap.org/data/3.0/onecall?lat=${cityData.lat}&lon=${cityData.lon}&units=imperial&appid=${process.env.REACT_APP_API_KEY}`
+			)
+			if (!response.ok) {
+				throw new Error('Error with weather response')
+			}
+			const data = await response.json()
+			return data
+		} catch (error) {
+			console.log('Fetch Weather Error', error)
+		}
+	}
+
 	useEffect(() => {
 		if (cityOption) {
 			setCity(cityOption.name)
 			setSearchOptions([])
 		}
-	}, [cityOption])
+	}, [cityOption, locationData])
+
+	useEffect(() => {
+		if (!city) {
+			// fullSearch('Denver')
+			fetchWeather(cityResult)
+			setLocationData(DenverDefault)
+		}
+	}, [])
 
 	// useEffect(() => {
 	// 	const fetchWeather = async () => {
@@ -181,12 +238,12 @@ const SearchLocation = () => {
 	return (
 		<div
 			id="search-location-container"
-			className={` bg-gradient-to-br ${formatBackground()} h-fit md:px-12 lg:px-32 pt-8 pb-12 px-4 shadow-xl shadow-gray-400`}
+			className={` bg-gradient-to-br ${formatBackground()} h-fit md:px-12 lg:px-32 pt-8 pb-12 px-4 shadow-xl shadow-gray-400 rounded-2xl`}
 		>
 			<div>
-				<QuickLinks cityData={locationData} weather={setWeather} />
+				<QuickLinks onButtonClick={fullSearch} />
 				<div className="flex justify-center mt-8">
-					<button className="button" onClick={handleLocationClick}>
+					<button className="button" onClick={handleLocalLocationClick}>
 						Local Weather
 					</button>
 				</div>

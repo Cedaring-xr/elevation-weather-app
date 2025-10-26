@@ -12,10 +12,7 @@ const formatToTime = (secs, format = 'h:mm a') => {
 	return DateTime.fromSeconds(secs).toFormat(format)
 }
 
-const iconsUrlFromCode = (code) => {
-	console.log('icon code', code)
-	return `https://openweathermap.org/img/wn/01n@2x.png`
-}
+const iconsUrlFromCode = (code) => `https://openweathermap.org/img/wn/${code}@2x.png`
 
 const formatCurrentWeather = (data) => {
 	const {

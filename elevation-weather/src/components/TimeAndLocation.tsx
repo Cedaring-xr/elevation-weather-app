@@ -9,7 +9,7 @@ type TimeAndLocationProps = {
 
 const TimeAndLocation: React.FC<TimeAndLocationProps> = ({ weather, location }) => {
 	useEffect(() => {
-		console.log('use effect locatoin', location)
+		// console.log('use effect locatoin', location)
 	}, [location])
 	return (
 		<div>
@@ -25,7 +25,7 @@ const TimeAndLocation: React.FC<TimeAndLocationProps> = ({ weather, location }) 
 					<p className="text-white text-3xl sans-font">
 						{/* location name and coutry will be undefined for local search */}
 						{/* need to change to something else if blank */}
-						{`${location}`}
+						{`${location[0].name}`}
 					</p>
 				) : (
 					''

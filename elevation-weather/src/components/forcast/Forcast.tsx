@@ -62,10 +62,10 @@ const Forcast: React.FC<any> = ({ title, items }) => {
 							<div key={item.dt}>
 								<div className="flex flex-col items-center justify-center">
 									<p>{item.description}</p>
-									<img src={iconsUrlFromCode(item.weather.icon)} alt="icon" />
+									<img src={iconsUrlFromCode(item.weather[0].icon)} alt="icon" />
 									<p>{item.temp.day.toFixed()}&deg;</p>
 								</div>
-								<div className=""></div>
+								<div className="">{item.weather[0].description}</div>
 							</div>
 					  ))
 					: ''}
