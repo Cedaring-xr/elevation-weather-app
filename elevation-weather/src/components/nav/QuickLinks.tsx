@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 interface ChildProps {
 	onButtonClick: (name: string) => void
@@ -8,7 +8,7 @@ const QuickLinks = ({ onButtonClick }: ChildProps) => {
 	const cities = [
 		{ id: 1, name: 'Paris' },
 		{ id: 2, name: 'Tokyo' },
-		{ id: 3, name: 'Los Angeles' },
+		{ id: 3, name: 'Sidney' },
 		{ id: 4, name: 'Denver' }
 	]
 

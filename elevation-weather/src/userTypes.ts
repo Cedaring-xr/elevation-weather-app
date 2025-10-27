@@ -98,12 +98,27 @@ export type optionType = {
 	lon: number
 }
 
-// not used????
-// export type City = {
-// 	name: string
-// 	elevation: number
-// 	location: {
-// 		lat: number
-// 		lon: number
-// 	}
-// }
+export type ForcastHourlyProps = {
+	title: string
+	items: {
+		dt: number
+		temp: number
+		feels_like: number
+		pressure: number
+		humidity: number
+		dew_point: number
+		uvi: number
+		coulds: number
+		visibility: number
+		wind_speed: number
+		wind_deg: number
+		wind_gust: number
+		weather: {
+			id: number
+			main: string
+			description: string
+			icon: string
+		}[]
+		icon: string
+	}[]
+}

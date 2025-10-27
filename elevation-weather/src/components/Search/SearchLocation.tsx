@@ -4,11 +4,12 @@ import { BiSearchAlt2 } from 'react-icons/bi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
 import { fetchLocationWeather } from '../../utils/weatherService'
-import Forcast from '../forcast/Forcast'
+import DailyForcast from '../forcast/DailyForcast'
 import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TweatherData, CitySearchData, optionType, ReverseGEO } from '../../userTypes'
+import HourlyForcast from '../forcast/HourlyForcast'
 
 const DenverDefault = [
 	{
@@ -26,7 +27,6 @@ type CityType = {
 }
 
 const SearchLocation = () => {
-	const [query, setQuery] = useState<{ lat: number; lon: number }>({ lat: 39.7392364, lon: -104.984862 }) // default to Denver
 	const [units, setUnits] = useState('Imperial')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
 
@@ -59,11 +59,11 @@ const SearchLocation = () => {
 			case 6:
 				return 'from-emerald-400 to-blue-600'
 			case 7:
-				return 'from-emerald-400 to-blue-700'
+				return 'from-amber-600 to-orange-700'
 			case 8:
 				return 'from-amber-600 to-orange-700'
 			case 9:
-				return 'from-amber-600 to-orange-700'
+				return 'from-amber-600 to-rose-600'
 			case 10:
 				return 'from-amber-600 to-rose-600'
 			default:
@@ -72,6 +72,7 @@ const SearchLocation = () => {
 	}
 
 	const handleLocalLocationClick = () => {
+		// needs a try catch and error handling
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				let lat = position.coords.latitude
@@ -86,7 +87,7 @@ const SearchLocation = () => {
 				)
 					.then((res) => res.json())
 					.then((data) => {
-						console.log('data', data)
+						toast.info('Fetching weather for ' + data[0].name)
 						setLocationData(data)
 					})
 			})
@@ -94,16 +95,6 @@ const SearchLocation = () => {
 			alert('Application does not have permission to use local geolocation')
 		}
 	}
-
-	// const getForcast = (cityOption: optionType) => {
-	// 	fetch(
-	// 		`https://api.openweathermap.org/data/3.0/onecall?lat=${cityOption.lat}&lon=${cityOption.lon}&units=imperial&appid=${process.env.REACT_APP_API_KEY}`
-	// 	)
-	// 		.then((res) => res.json())
-	// 		.then((data) => setWeather(data))
-
-	// 	console.log(weather)
-	// }
 
 	// search bar button
 	// const handleSearchClick = () => {
@@ -162,14 +153,8 @@ const SearchLocation = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setLocationData(data)
-				setCityResult(data)
-			})
-
-			.then(() => {
-				if (cityResult) {
-					console.log('city result', cityResult)
-					fetchWeather(cityResult)
-				}
+				setCityResult(data[0])
+				fetchWeather(data[0])
 			})
 	}
 
@@ -182,7 +167,9 @@ const SearchLocation = () => {
 				throw new Error('Error with weather response')
 			}
 			const data = await response.json()
-			return data
+			toast.info('Fetching weather for ' + cityData.name)
+			setWeather(data)
+			return data //not sure I actually need a return here
 		} catch (error) {
 			console.log('Fetch Weather Error', error)
 		}
@@ -197,9 +184,8 @@ const SearchLocation = () => {
 
 	useEffect(() => {
 		if (!city) {
-			// fullSearch('Denver')
-			fetchWeather(cityResult)
 			setLocationData(DenverDefault)
+			fetchWeather(cityResult)
 		}
 	}, [])
 
@@ -296,8 +282,8 @@ const SearchLocation = () => {
 							<CurrentWeather weather={weather} />
 						</div>
 						<div className="forcast-container">
-							{/* <Forcast title="Hourly Forcast" items={weather?.hourly} /> */}
-							<Forcast title="Daily Forcast" items={weather?.daily} />
+							<HourlyForcast title="Hourly Forcast" items={weather?.hourly} />
+							<DailyForcast title="Daily Forcast" items={weather?.daily} />
 						</div>
 					</>
 				) : (
