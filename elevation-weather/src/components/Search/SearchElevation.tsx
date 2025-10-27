@@ -55,9 +55,9 @@ const SearchElevation = () => {
 
 		try {
 			const cityList: TweatherData[] = []
-			console.log('sorted list', sortedList)
+			// console.log('sorted list', sortedList)
 			for (const city of sortedList) {
-				await getCityWeatherData({ ...{ q: city.name }, units }).then((data) => {
+				await getCityWeatherData(city.location).then((data) => {
 					cityList.push(data)
 				})
 			}
@@ -119,8 +119,8 @@ const SearchElevation = () => {
 				<hr />
 				{weatherList && weatherList.length > 1 ? (
 					<div>
-						{weatherList.map((city: TweatherData) => (
-							<WeatherCity key={city.lat} city={city} />
+						{weatherList.map((city: any) => (
+							<WeatherCity key={city.lat} oneCity={city[0]} />
 						))}
 					</div>
 				) : (

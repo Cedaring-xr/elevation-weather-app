@@ -102,15 +102,12 @@ const getLocationWeatherData = async (infoType, searchParams) => {
 	}
 }
 
-const getCityWeatherData = async (infoType, searchParams) => {
-	console.log('test city search')
-	const url = new URL(CITY_URL + infoType)
-	console.log('full city url', url)
-	url.search = new URLSearchParams({ ...searchParams, appid: API_KEY })
-
+// gets called from the elevation page
+const getCityWeatherData = async (location: { lat: Number, lon: number }) => {
 	try {
-		console.log(url)
-		const response = await fetch(url)
+		const response = await fetch(
+			`https://api.openweathermap.org/geo/1.0/reverse?lat=${location.lat}&lon=${location.lon}&limit=1&appid=${process.env.REACT_APP_API_KEY}`
+		)
 		if (!response.ok) {
 			throw new Error('Error with fetching city response')
 		}
