@@ -5,11 +5,14 @@ import { TweatherData } from '../../userTypes'
 import { toast } from 'react-toastify'
 
 // elevation search is the only one that uses this
-export default function WeatherCity(oneCity: any) {
+export default function WeatherCity(oneCity: any, elevation: any) {
 	const [cityWeather, setCityWeather] = useState<TweatherData | null>(null)
 
+	const formatElevation = (elevation: number) => {
+		return elevation.toLocaleString('en-US')
+	}
+
 	const convertToWeather = async (city: any) => {
-		console.log('inner city', city.lat)
 		try {
 			const response = await fetch(
 				`https://api.openweathermap.org/data/3.0/onecall?lat=${city.lat}&lon=${city.lon}&units=imperial&appid=${process.env.REACT_APP_API_KEY}`
@@ -28,10 +31,8 @@ export default function WeatherCity(oneCity: any) {
 
 	useEffect(() => {
 		// this works but makes too many extra calls
-		console.log('city input', oneCity.oneCity)
-
 		convertToWeather(oneCity.oneCity)
-		console.log('city weather', cityWeather)
+		console.log('city weather', oneCity)
 	}, [oneCity.oneCity])
 
 	return (
@@ -40,7 +41,7 @@ export default function WeatherCity(oneCity: any) {
 				<>
 					<h2 className="flex justify-center text-2xl">{oneCity.oneCity.name}</h2>
 					<div className="flex flex-row justify-between items-center text-white w-2/3 md:w-1/2 mx-auto">
-						<span className="text-2xl">{cityWeather.current.temp}</span>
+						<span className="text-2xl">{formatElevation(oneCity.elevation)}</span>
 						<img src={iconsUrlFromCode(cityWeather.current.weather[0].icon)} alt="" />
 						<p className="flex flex-col text-3xl">{cityWeather.current.temp.toFixed()}&deg;</p>
 					</div>

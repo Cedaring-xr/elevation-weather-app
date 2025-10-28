@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import isoMtn from '../../assets/iso-mtn-color.png'
 import isoMtn2 from '../../assets/iso-mtn-bw.png'
 import { BiSearchAlt2 } from 'react-icons/bi'
@@ -9,10 +9,11 @@ import ComparisonSlider from '../ComparisonSlider'
 import { TweatherData } from '../../userTypes'
 import Banner from './Banner'
 import WeatherCity from './WeatherCity'
+import { ToastContainer } from 'react-toastify'
 
 const SearchElevation = () => {
 	const [units, setUnits] = useState('Imperial') // switching units is not implemented yet
-	//state for child component
+	//state for child components
 	const [elevation, setElevation] = useState<string>('7,030')
 	const [sliderPosition, setSliderPosition] = useState(50) //percentage of slider line between images
 	const [isDragging, setIsDragging] = useState(false)
@@ -49,19 +50,20 @@ const SearchElevation = () => {
 		setIsDragging(false)
 	}
 
+	const sortedList = useRef<any>()
+
 	const handleElevationSearch = useCallback(async () => {
 		const elevationNumber = parseInt(elevation.replace(/,/g, '')) //remove comma and convert to number
-		const sortedList = findClosestElevation(list.cities, elevationNumber, 'elevation', 5)
+		sortedList.current = findClosestElevation(list.cities, elevationNumber, 'elevation', 5)
 
 		try {
 			const cityList: TweatherData[] = []
-			// console.log('sorted list', sortedList)
-			for (const city of sortedList) {
+			console.log('sorted list', sortedList)
+			for (const city of sortedList.current) {
 				await getCityWeatherData(city.location).then((data) => {
 					cityList.push(data)
 				})
 			}
-			// console.log('cityList', cityList)
 			setSearch(true)
 			return cityList
 		} catch (error) {
@@ -81,10 +83,7 @@ const SearchElevation = () => {
 			<h3 className="m-1 lg:m-4 px-4 md:px-8 py-1 bg-neutral-100 rounded-lg md:text-xl sans-font text-center uppercase font-bold text-stone-800 max-w-[500px] self-center">
 				Search Weather by Elevation
 			</h3>
-			<Banner
-				message="This is a test placeholder feature for getting weather based on a given elevation height. Currently
-					I am limiting the search to cities whithin Colorado because it has a wide range of elevations."
-			/>
+			<Banner message="This is a test feature for getting weather based on a given elevation. Currently the search is limited to cities whithin Colorado because of the wide range of elevations throughout the state." />
 			<span className="sans-font text-white text-center m-4 text-3xl">
 				Locations in Colorado <hr />
 			</span>
@@ -117,16 +116,21 @@ const SearchElevation = () => {
 			<div className="text-white m-4">
 				<h3 className="my-2 text-xl">Cities close to the selected elevation</h3>
 				<hr />
-				{weatherList && weatherList.length > 1 ? (
+				{weatherList && sortedList.current && weatherList.length > 1 ? (
 					<div>
-						{weatherList.map((city: any) => (
-							<WeatherCity key={city.lat} oneCity={city[0]} />
+						{weatherList.map((city: any, index: number) => (
+							<WeatherCity
+								key={index}
+								oneCity={city[0]}
+								elevation={sortedList.current[index]?.elevation ?? 'Unknown'}
+							/>
 						))}
 					</div>
 				) : (
 					''
 				)}
 			</div>
+			<ToastContainer autoClose={5000} theme="colored" newestOnTop={true} />
 		</div>
 	)
 }

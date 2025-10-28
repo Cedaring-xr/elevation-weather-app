@@ -39,31 +39,31 @@ const SearchLocation = () => {
 	const [cityResult, setCityResult] = useState<CitySearchData>(DenverDefault[0])
 
 	const formatBackground = () => {
-		if (!weather) return 'from-cyan-700 to blue-700'
+		if (!weather) return 'from-emerald-400 to-blue-600' //default
 		// const threshold = units === 'metric' ? 20 : 60
 		//todo: normalize weather.temp for both celcius and farenheit
 		const thresholdValue = Math.round(weather.current.temp / 10)
 		switch (thresholdValue) {
 			case 0:
-				return 'from-zinc-400 to-sky-800'
+				return 'from-gray-300 to-cyan-800'
 			case 1:
-				return 'from-zinc-400 to-sky-800'
+				return 'from-gray-300 to-cyan-800'
 			case 2:
-				return 'from-zinc-400 to-sky-700'
+				return 'from-gray-300 to-cyan-800'
 			case 3:
-				return 'from-zinc-400 to-sky-700'
+				return 'from-zinc-400 to-sky-800'
 			case 4:
-				return 'from-cyan-600 to-sky-800'
+				return 'from-cyan-500 to-teal-800'
 			case 5:
-				return 'from-cyan-600 to-sky-800'
+				return 'from-cyan-600 to-blue-600'
 			case 6:
 				return 'from-emerald-400 to-blue-600'
 			case 7:
-				return 'from-amber-600 to-orange-700'
+				return 'from-amber-500 to-teal-600'
 			case 8:
-				return 'from-amber-600 to-orange-700'
+				return 'from-yellow-500 to-orange-500'
 			case 9:
-				return 'from-amber-600 to-rose-600'
+				return 'from-amber-600 to-orange-700'
 			case 10:
 				return 'from-amber-600 to-rose-600'
 			default:
@@ -188,38 +188,6 @@ const SearchLocation = () => {
 			fetchWeather(cityResult)
 		}
 	}, [])
-
-	// useEffect(() => {
-	// 	const fetchWeather = async () => {
-	// 		//initial action on load
-	// 		if (citySearched === undefined) {
-	// 			setCitySearched({ q: 'Denver' })
-	// 		} else if (citySearched == null) {
-	// 			setCitySearched({ q: 'Denver' })
-	// 		} else if (citySearched.q.length > 1) {
-	// 			console.log('useEffect fetch weather if')
-	// 			toast.info('Fetching weather for ' + citySearched.q)
-
-	// 			// await getCityWeatherData({ ...citySearch, units }).then((data) => {
-	// 			// 	console.log('return city data', data)
-	// 			// 	setQuery({ lat: 39.7392364, lon: -104.984862 }) // this is temp data
-	// 			// })
-	// 			// await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
-	// 			// 	console.log('return from weather fetch', data)
-	// 			// 	setWeather(null)
-	// 			// 	console.log(weather)
-	// 			// })
-	// 		} else {
-	// 			toast.info('Fetching weather for ' + query.lat + ' ' + query.lon)
-	// 			// await getFormattedLocationWeatherData({ ...query, units }).then((data) => {
-	// 			// 	setWeather(null)
-	// 			// 	console.log(weather)
-	// 			// })
-	// 		}
-	// 	}
-
-	// 	fetchWeather()
-	// }, [citySearched, query.lat, query.lon])
 
 	return (
 		<div
