@@ -1,9 +1,8 @@
 import React from 'react'
-import { iconsUrlFromCode } from '../../utils/weatherService'
+import { iconsUrlFromCode, formatToTimezone } from '../../utils/weatherService'
 import { ForcastHourlyProps } from '../../userTypes'
 
-const HourlyForcast: React.FC<any> = ({ title, items }) => {
-	// need to display hours text title
+const HourlyForcast: React.FC<any> = ({ title, items, timezone }) => {
 
 	return (
 		<div className="text-white">
@@ -13,10 +12,12 @@ const HourlyForcast: React.FC<any> = ({ title, items }) => {
 			</div>
 			<div className="flex items-center justify-between">
 				{(items as ForcastHourlyProps)
-					? items.slice(0, 8).map((item: any) => (
+					? items.slice(0, 8).map((item: any, index: number) => (
 							<div key={item.dt}>
 								<div className="flex flex-col items-center justify-center">
-									<p>{item.description}</p>
+									<p className="font-medium">
+										{index === 0 ? 'Now' : formatToTimezone(item.dt, timezone, 'h a')}
+									</p>
 									<img src={iconsUrlFromCode(item.weather[0].icon)} alt="icon" />
 									<p>{item.temp.toFixed()}&deg;</p>
 								</div>
