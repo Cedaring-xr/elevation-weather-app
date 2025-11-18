@@ -1,6 +1,5 @@
 import React from 'react'
-import { iconsUrlFromCode } from '../utils/weatherService'
-import { formatToTime } from '../utils/weatherService'
+import { iconsUrlFromCode, formatToTimezone } from '../utils/weatherService'
 import { BsThermometerSun } from 'react-icons/bs'
 import { BsThermometerSnow } from 'react-icons/bs'
 import { TweatherData } from '../userTypes'
@@ -27,9 +26,9 @@ const CurrentWeather: React.FC<WeatherProps> = ({ weather }) => {
 						</div>
 					</div>
 					<div className="flex flex-row items-center justify-center space-x-2 text-white py-3">
-						<p className="text-sm">sunrise: {formatToTime(weather.current.sunrise)}</p>
+						<p className="text-sm">sunrise: {formatToTimezone(weather.current.sunrise, weather.timezone)}</p>
 						<span className="text-xl text-neutral-100 font-light m-1">|</span>
-						<p className="text-sm">sunset: {formatToTime(weather.current.sunset)}</p>
+						<p className="text-sm">sunset: {formatToTimezone(weather.current.sunset, weather.timezone)}</p>
 						<span className="text-xl text-neutral-100 font-light m-1">|</span>
 						<p className="text-sm flex">
 							<BsThermometerSnow className="text-xl mr-1" />

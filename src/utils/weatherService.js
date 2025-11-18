@@ -7,8 +7,8 @@ const COORDINANTS_URL = 'https://api.openweathermap.org/data/3.0/'
 const formatToLocalTime = (secs, zone, format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a") =>
 	DateTime.fromSeconds(secs).setZone(zone).toFormat(format)
 
-const formatToTime = (secs, format = 'h:mm a') => {
-	return DateTime.fromSeconds(secs).toFormat(format)
+const formatToTimezone = (secs, zone, format = 'h:mm a') => {
+	return DateTime.fromSeconds(secs).setZone(zone).toFormat(format)
 }
 
 const iconsUrlFromCode = (code) => `https://openweathermap.org/img/wn/${code}@2x.png`
@@ -142,5 +142,5 @@ const findClosestElevation = (array, userInput, propertyName, amount) => {
 
 // export { getFormattedLocationWeatherData }
 export { getCityWeatherData }
-export { formatToTime, formatToLocalTime, iconsUrlFromCode, findClosestElevation }
+export { formatToTimezone, formatToLocalTime, iconsUrlFromCode, findClosestElevation }
 export { fetchLocationWeather }

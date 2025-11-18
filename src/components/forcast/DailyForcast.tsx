@@ -1,8 +1,9 @@
 import React from 'react'
-import { iconsUrlFromCode } from '../../utils/weatherService'
+import { iconsUrlFromCode, formatToTimezone } from '../../utils/weatherService'
 
 type ForcastDailyProps = {
 	title: string
+	timezone: string
 	items: {
 		dt: number
 		sunrise: number
@@ -22,8 +23,7 @@ type ForcastDailyProps = {
 	}[]
 }
 
-const DailyForcast: React.FC<any> = ({ title, items }) => {
-	const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const DailyForcast: React.FC<any> = ({ title, items, timezone }) => {
 
 	return (
 		<div className="text-white">
@@ -31,16 +31,16 @@ const DailyForcast: React.FC<any> = ({ title, items }) => {
 				<h4 className="text-xl">{title}</h4>
 				<hr className="my-1" />
 			</div>
-			<div className="flex items-center justify-between">
+			<div className="flex items-start justify-between">
 				{items
-					? items.map((item: any) => (
-							<div key={item.dt}>
-								<div className="flex flex-col items-center justify-center">
-									<p>{item.description}</p>
-									<img src={iconsUrlFromCode(item.weather[0].icon)} alt="icon" />
-									<p>{item.temp.day.toFixed()}&deg;</p>
-								</div>
-								<div className="">{item.weather[0].description}</div>
+					? items.map((item: any, index: number) => (
+							<div key={item.dt} className="flex flex-col items-center text-center w-20">
+								<p className="font-medium h-6">
+									{index === 0 ? 'Today' : formatToTimezone(item.dt, timezone, 'ccc')}
+								</p>
+								<img src={iconsUrlFromCode(item.weather[0].icon)} alt="icon" className="w-12 h-12" />
+								<p className="h-6">{item.temp.day.toFixed()}&deg;</p>
+								<p className="text-xs mt-1">{item.weather[0].description}</p>
 							</div>
 					  ))
 					: ''}

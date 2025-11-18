@@ -250,8 +250,8 @@ const SearchLocation = () => {
 							<CurrentWeather weather={weather} />
 						</div>
 						<div className="forcast-container">
-							<HourlyForcast title="Hourly Forcast" items={weather?.hourly} />
-							<DailyForcast title="Daily Forcast" items={weather?.daily} />
+							<HourlyForcast title="Hourly Forcast" items={weather?.hourly} timezone={weather?.timezone} />
+							<DailyForcast title="Daily Forcast" items={weather?.daily} timezone={weather?.timezone} />
 						</div>
 					</>
 				) : (
