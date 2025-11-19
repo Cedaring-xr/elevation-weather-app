@@ -13,6 +13,33 @@ const formatToTimezone = (secs, zone, format = 'h:mm a') => {
 
 const iconsUrlFromCode = (code) => `https://openweathermap.org/img/wn/${code}@2x.png`
 
+// Temperature conversion functions
+const fahrenheitToCelsius = (fahrenheit) => {
+	return Math.round((fahrenheit - 32) * 5 / 9)
+}
+
+const celsiusToFahrenheit = (celsius) => {
+	return Math.round((celsius * 9 / 5) + 32)
+}
+
+// Converts temperature based on target unit
+// temp: the temperature value
+// toUnit: 'C' for Celsius, 'F' for Fahrenheit
+// fromUnit: 'C' or 'F' (defaults to 'F' since API returns imperial)
+const convertTemperature = (temp, toUnit, fromUnit = 'F') => {
+	if (fromUnit === toUnit) return Math.round(temp)
+
+	if (fromUnit === 'F' && toUnit === 'C') {
+		return fahrenheitToCelsius(temp)
+	}
+
+	if (fromUnit === 'C' && toUnit === 'F') {
+		return celsiusToFahrenheit(temp)
+	}
+
+	return Math.round(temp)
+}
+
 const formatCurrentWeather = (data) => {
 	const {
 		coord: { lat, lon },
@@ -142,5 +169,5 @@ const findClosestElevation = (array, userInput, propertyName, amount) => {
 
 // export { getFormattedLocationWeatherData }
 export { getCityWeatherData }
-export { formatToTimezone, formatToLocalTime, iconsUrlFromCode, findClosestElevation }
+export { formatToTimezone, formatToLocalTime, iconsUrlFromCode, findClosestElevation, convertTemperature, fahrenheitToCelsius, celsiusToFahrenheit }
 export { fetchLocationWeather }
