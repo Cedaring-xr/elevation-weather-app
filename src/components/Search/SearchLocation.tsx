@@ -27,7 +27,7 @@ type CityType = {
 }
 
 const SearchLocation = () => {
-	const [units, setUnits] = useState('Imperial')
+	const [units, setUnits] = useState<'F' | 'C'>('F')
 	const [weather, setWeather] = useState<TweatherData | null>(null)
 
 	const [city, setCity] = useState<string>('')
@@ -139,7 +139,7 @@ const SearchLocation = () => {
 	}
 
 	const handleUnitsChange = (e: { currentTarget: { name: string } }) => {
-		const selectedUnit = e.currentTarget.name
+		const selectedUnit = e.currentTarget.name as 'F' | 'C'
 		if (units !== selectedUnit) setUnits(selectedUnit)
 	}
 
@@ -232,11 +232,19 @@ const SearchLocation = () => {
 						</div>
 					</div>
 					<div className="flex flex-row w-1/5 items-center pl-4">
-						<button name="metric" className="text-xl text-white" onClick={handleUnitsChange}>
+						<button
+							name="C"
+							className={`text-xl transition-all ${units === 'C' ? 'text-white font-bold' : 'text-gray-300 hover:text-white'}`}
+							onClick={handleUnitsChange}
+						>
 							&deg;C
 						</button>
 						<p className="text-2xl text-white font-light m-1">|</p>
-						<button name="imperial" className="text-xl text-white" onClick={handleUnitsChange}>
+						<button
+							name="F"
+							className={`text-xl transition-all ${units === 'F' ? 'text-white font-bold' : 'text-gray-300 hover:text-white'}`}
+							onClick={handleUnitsChange}
+						>
 							&deg;F
 						</button>
 					</div>
@@ -247,7 +255,7 @@ const SearchLocation = () => {
 							<TimeAndLocation weather={weather} location={locationData} />
 						</div>
 						<div className="weather-container">
-							<CurrentWeather weather={weather} />
+							<CurrentWeather weather={weather} units={units} />
 						</div>
 						<div className="forcast-container">
 							<HourlyForcast title="Hourly Forcast" items={weather?.hourly} timezone={weather?.timezone} />
