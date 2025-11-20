@@ -1,30 +1,7 @@
 import React from 'react'
 import { iconsUrlFromCode, formatToTimezone } from '../../utils/weatherService'
 
-type ForcastDailyProps = {
-	title: string
-	timezone: string
-	items: {
-		dt: number
-		sunrise: number
-		sunset: number
-		moonrise: number
-		moonset: number
-		moon_phase: number
-		summary: string
-		temp: {
-			day: number
-			min: number
-			max: number
-			night: number
-			eve: number
-			morn: number
-		}
-	}[]
-}
-
 const DailyForcast: React.FC<any> = ({ title, items, timezone }) => {
-
 	return (
 		<div className="text-white">
 			<div className="mt-12">

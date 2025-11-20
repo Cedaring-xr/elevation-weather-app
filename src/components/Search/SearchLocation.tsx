@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import CurrentWeather from '../CurrentWeather'
 import TimeAndLocation from '../TimeAndLocation'
-import { fetchLocationWeather } from '../../utils/weatherService'
 import DailyForcast from '../forcast/DailyForcast'
 import QuickLinks from '../nav/QuickLinks'
 import { ToastContainer, toast } from 'react-toastify'
@@ -234,7 +233,9 @@ const SearchLocation = () => {
 					<div className="flex flex-row w-1/5 items-center pl-4">
 						<button
 							name="C"
-							className={`text-xl transition-all ${units === 'C' ? 'text-white font-bold' : 'text-gray-300 hover:text-white'}`}
+							className={`text-xl transition-all ${
+								units === 'C' ? 'text-white font-bold' : 'text-gray-300 hover:text-white'
+							}`}
 							onClick={handleUnitsChange}
 						>
 							&deg;C
@@ -242,7 +243,9 @@ const SearchLocation = () => {
 						<p className="text-2xl text-white font-light m-1">|</p>
 						<button
 							name="F"
-							className={`text-xl transition-all ${units === 'F' ? 'text-white font-bold' : 'text-gray-300 hover:text-white'}`}
+							className={`text-xl transition-all ${
+								units === 'F' ? 'text-white font-bold' : 'text-gray-300 hover:text-white'
+							}`}
 							onClick={handleUnitsChange}
 						>
 							&deg;F
@@ -258,7 +261,11 @@ const SearchLocation = () => {
 							<CurrentWeather weather={weather} units={units} />
 						</div>
 						<div className="forcast-container">
-							<HourlyForcast title="Hourly Forcast" items={weather?.hourly} timezone={weather?.timezone} />
+							<HourlyForcast
+								title="Hourly Forcast"
+								items={weather?.hourly}
+								timezone={weather?.timezone}
+							/>
 							<DailyForcast title="Daily Forcast" items={weather?.daily} timezone={weather?.timezone} />
 						</div>
 					</>

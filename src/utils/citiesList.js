@@ -1,3 +1,5 @@
+// This was a script for adding more cities to the list file
+
 const fs = require('fs')
 
 const addCitiesToJSON = (cities, filename) => {
